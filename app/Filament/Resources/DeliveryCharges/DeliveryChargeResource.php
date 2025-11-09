@@ -7,6 +7,9 @@ use App\Filament\Resources\DeliveryCharges\Pages\EditDeliveryCharge;
 use App\Filament\Resources\DeliveryCharges\Pages\ListDeliveryCharges;
 use App\Filament\Resources\DeliveryCharges\Schemas\DeliveryChargeForm;
 use App\Filament\Resources\DeliveryCharges\Tables\DeliveryChargesTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Select;
 use App\Models\DeliveryCharge;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -24,10 +27,16 @@ class DeliveryChargeResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'DeliveryCharge';
 
+
     public static function form(Schema $schema): Schema
     {
-        return DeliveryChargeForm::configure($schema);
+        return $schema->schema([
+            TextInput::make('area_name')->required(),
+            TextInput::make('charge')->numeric()->required(),
+            Toggle::make('status')->default(true),
+        ]);
     }
+
 
     public static function table(Table $table): Table
     {

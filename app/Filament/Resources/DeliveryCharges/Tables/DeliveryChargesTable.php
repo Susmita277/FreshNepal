@@ -4,10 +4,10 @@ namespace App\Filament\Resources\DeliveryCharges\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
 class DeliveryChargesTable
@@ -16,11 +16,11 @@ class DeliveryChargesTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('area_name'),
+                TextColumn::make('charge'),
+                
             ])
-            ->filters([
-                TrashedFilter::make(),
-            ])
+          
             ->recordActions([
                 EditAction::make(),
             ])

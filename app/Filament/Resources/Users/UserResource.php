@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Filament\Resources\Users;
-
+use Filament\Forms\Form;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -22,10 +25,23 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'User';
 
+
     public static function form(Schema $schema): Schema
     {
-        return UserForm::configure($schema);
+        return $schema->schema([
+            TextInput::make('name')->required(),
+            TextInput::make('email')->email()->required(),
+            TextInput::make('phone'),
+            Select::make('role')->options([
+                'admin' => 'Admin',
+                'vendor' => 'Vendor',
+                'customer' => 'Customer',
+            ])->required(),
+            Textarea::make('address'),
+            TextInput::make('password')->password()->dehydrated(fn($state) => filled($state)),
+        ]);
     }
+
 
     public static function table(Table $table): Table
     {

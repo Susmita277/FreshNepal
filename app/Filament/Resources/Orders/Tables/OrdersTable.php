@@ -7,7 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class OrdersTable
@@ -16,11 +16,15 @@ class OrdersTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('user.name'),
+                TextColumn::make('vendor.name'),
+                TextColumn::make('delivery_charge'),
+                TextColumn::make('delivery_address'),
+                TextColumn::make('total_amount'),
+                TextColumn::make('status'),
+
             ])
-            ->filters([
-                TrashedFilter::make(),
-            ])
+          
             ->recordActions([
                 EditAction::make(),
             ])

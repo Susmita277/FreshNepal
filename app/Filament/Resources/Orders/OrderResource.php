@@ -7,6 +7,9 @@ use App\Filament\Resources\Orders\Pages\EditOrder;
 use App\Filament\Resources\Orders\Pages\ListOrders;
 use App\Filament\Resources\Orders\Schemas\OrderForm;
 use App\Filament\Resources\Orders\Tables\OrdersTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use App\Models\Order;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -24,10 +27,29 @@ class OrderResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Order';
 
+  
     public static function form(Schema $schema): Schema
     {
-        return OrderForm::configure($schema);
+        return $schema->schema([
+            Select::make('user_id')->relationship('user', 'name')->required(),
+            Select::make('vendor_id')->relationship('vendor', 'name')->required(),
+            TextInput::make('total_amount')->numeric()->required(),
+            TextInput::make('delivery_charge')->numeric(),
+            Select::make('status')->options([
+                'pending' => 'Pending',
+                'accepted' => 'Accepted',
+                'rejected' => 'Rejected',
+                'delivered' => 'Delivered',
+            ]),
+            Textarea::make('delivery_address'),
+            Select::make('payment_method')->options([
+                'Cash on Delivery' => 'Cash on Delivery',
+                'eSewa' => 'eSewa',
+                'Khalti' => 'Khalti',
+            ]),
+        ]);
     }
+
 
     public static function table(Table $table): Table
     {

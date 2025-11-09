@@ -24,15 +24,16 @@ class ProductResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Products';
 
+
+
+
+
     public static function form(Schema $schema): Schema
     {
         return ProductForm::configure($schema);
+       
     }
 
-    public static function table(Table $table): Table
-    {
-        return ProductsTable::configure($table);
-    }
 
     public static function getRelations(): array
     {

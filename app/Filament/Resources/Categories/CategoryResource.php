@@ -7,6 +7,12 @@ use App\Filament\Resources\Categories\Pages\EditCategory;
 use App\Filament\Resources\Categories\Pages\ListCategories;
 use App\Filament\Resources\Categories\Schemas\CategoryForm;
 use App\Filament\Resources\Categories\Tables\CategoriesTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Toggle;
+use Illuminate\Support\Str;
 use App\Models\Category;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -24,10 +30,35 @@ class CategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Categoriea';
 
+
     public static function form(Schema $schema): Schema
     {
-        return CategoryForm::configure($schema);
+        return $schema->schema([
+            TextInput::make('name')
+                ->label('Category Name')
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(function ($state, callable $set) {
+                    $set('slug', Str::slug($state));
+                }),
+
+            Select::make('parent_id')
+                ->relationship('parent', 'name')
+                ->label('Parent Category'),
+
+            TextInput::make('slug')
+                ->label('Slug')
+                ->required()
+                ->unique(ignorable: fn($record) => $record),
+
+            Textarea::make('description'),
+
+            FileUpload::make('image')->image(),
+
+            Toggle::make('status')->default(true),
+        ]);
     }
+
 
     public static function table(Table $table): Table
     {

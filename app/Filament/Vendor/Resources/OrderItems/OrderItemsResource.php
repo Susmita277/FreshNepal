@@ -8,6 +8,8 @@ use App\Filament\Vendor\Resources\OrderItems\Pages\ListOrderItems;
 use App\Filament\Vendor\Resources\OrderItems\Schemas\OrderItemsForm;
 use App\Filament\Vendor\Resources\OrderItems\Tables\OrderItemsTable;
 use App\Models\OrderItems;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;

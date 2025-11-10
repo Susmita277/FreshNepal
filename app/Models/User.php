@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status',
+        'role',
     ];
 
     /**
@@ -76,5 +78,9 @@ class User extends Authenticatable
     public function deliveryCharges()
     {
         return $this->hasMany(DeliveryCharge::class, 'vendor_id');
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

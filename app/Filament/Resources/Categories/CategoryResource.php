@@ -53,7 +53,10 @@ class CategoryResource extends Resource
 
             Textarea::make('description'),
 
-            FileUpload::make('image')->image(),
+            FileUpload::make('image')
+            ->image()
+            ->directory('categories')
+            ->visibility('public'),
 
             Toggle::make('status')->default(true),
         ]);

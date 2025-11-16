@@ -2,85 +2,59 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'status',
         'role',
+        'phone', // Add phone if it's in your database
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
-        'two_factor_secret',
-        'two_factor_recovery_codes',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Add this method - it's REQUIRED for Filament
+    public function canAccessPanel(Panel $panel): bool
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        // For vendor panel
+        if ($panel->getId() === 'vendor') {
+            return $this->role === 'vendor';
+        }
+        
+        // For admin panel (if you have one)
+        if ($panel->getId() === 'admin') {
+            return $this->role === 'admin';
+        }
+        
+        return false;
     }
 
-    /**
-     * Get the user's initials
-     */
-    public function initials(): string
+    public function products(): HasMany
     {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn($word) => Str::substr($word, 0, 1))
-            ->implode('');
+        return $this->hasMany(Product::class, 'user_id');
     }
-    public function products()
+
+
+    public function isVendor()
     {
-        return $this->hasMany(Product::class, 'vendor_id');
+        return $this->role === 'vendor';
     }
-    public function vendorOrders()
+
+    public function isAdmin()
     {
-        return $this->hasMany(Order::class, 'vendor_id');
-    }
-    public function customerOrders()
-    {
-        return $this->hasMany(Order::class, 'user_id');
-    }
-    public function deliveryCharges()
-    {
-        return $this->hasMany(DeliveryCharge::class, 'vendor_id');
-    }
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
+        return $this->role === 'admin';
     }
 }

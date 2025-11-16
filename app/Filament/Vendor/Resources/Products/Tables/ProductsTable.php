@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Table;
 
 class ProductsTable
@@ -19,10 +20,14 @@ class ProductsTable
                 TextColumn::make('name'),
                 // TextColumn::make('unit_type'),
                 TextColumn::make('price')->money('NPR'),
-                // TextColumn::make('quantity'),
+                TextColumn::make('unit_type'),
+                TextColumn::make('stock_quantity'),
+                TextColumn::make('category.name'),
+    
+
 
             ])
-          
+
             ->recordActions([
                 EditAction::make(),
             ])

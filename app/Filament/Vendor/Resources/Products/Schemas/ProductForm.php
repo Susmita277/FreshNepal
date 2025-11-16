@@ -16,6 +16,10 @@ class ProductForm
     {
         return $schema
             ->schema([
+                \Filament\Forms\Components\Hidden::make('user_id')
+                    ->default(fn() => \Illuminate\Support\Facades\Auth::id())
+                    ->required(),
+                    
                 TextInput::make('name')
                     ->label('Product Name')
                     ->required()
@@ -24,7 +28,7 @@ class ProductForm
                         $set('slug', Str::slug($state));
                     }),
 
-            
+
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()
@@ -46,14 +50,16 @@ class ProductForm
                         'kg' => 'Kg',
                         'piece' => 'Piece',
                     ])
-                    ->required(),
+                    ->required()
+                    ->reactive(),
+
 
                 TextInput::make('price')
                     ->label('Price per Unit')
                     ->numeric()
                     ->required(),
 
-                TextInput::make('quantity')
+                TextInput::make('stock_quantity')
                     ->label('Quantity')
                     ->numeric()
                     ->required()
@@ -61,10 +67,18 @@ class ProductForm
                         ? 'Enter weight in kg (fractional allowed, e.g., 0.5)'
                         : 'Enter number of pieces'),
 
+
+
                 FileUpload::make('image')
                     ->label('Product Image')
                     ->image()
-                    ->required(),
+                    ->required()
+                    ->directory('products')
+                    ->disk('public')
+                    ->preserveFilenames()
+                    ->maxSize(5120)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/jpg'])
+                    ->storeFileNamesIn('image'),
 
 
 
@@ -76,7 +90,7 @@ class ProductForm
                         'unavailable' => 'Unavailable',
                     ])
                     ->required(),
-                    
+
             ]);
     }
 }

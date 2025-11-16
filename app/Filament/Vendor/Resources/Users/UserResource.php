@@ -36,12 +36,14 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->where('role', 'customer') // only show customers
-            ->whereHas('orders', function (Builder $query) {
-                $query->where('vendor_id', Auth::id());
-            });
+        return parent::getEloquentQuery();
+            // ->where('role', 'customer') // only show customers
+            // ->whereHas('orders', function (Builder $query) {
+            //     $query->where('vendor_id', Auth::id());
+            // });
     }
+    
+    
 
     public static function getRelations(): array
     {

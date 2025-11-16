@@ -1,5 +1,5 @@
 <!--product details start-->
-<main class="lg:px-24 py-12">
+<main class="lg:px-24 py-12" >
     @if (session('success'))
         <div
             class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg z-50">
@@ -75,8 +75,7 @@
                             class="lg:h-[400px] lg:w-[500px] h-[250px] border border-gray-200 rounded-lg bg-gray-50 overflow-hidden rounded-lg">
                             @if ($selectedImage)
                                 <img alt="{{ $product->name }}" src="{{ $selectedImage }}"
-                                    class="w-full h-full object-contain object-center "
-                                    onerror="this.onerror=null; this.style.display='none'; document.getElementById('fallback-image').style.display='flex';">
+                                    class="w-full h-full object-contain object-center ">
 
                                 <!-- Fallback when image fails to load -->
                                 <div id="fallback-image"
@@ -115,7 +114,7 @@
                                     title="{{ $isSingleImage ? 'Product Image' : 'Click to view' }}">
                                     <img alt="Thumbnail" src="{{ $thumbnailUrl }}"
                                         class="w-full h-full object-cover object-center rounded"
-                                        onerror="this.src='https://via.placeholder.com/80x80/e5e7eb/9ca3af?text=Thumb'">
+                                    >
                                 </div>
                             @endforeach
                         </div>

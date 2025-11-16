@@ -8,13 +8,15 @@
                 Get fresh fruits and vegetables from many trusted sellers in one place.
                 Enjoy healthy and tasty food every day.
             </p>
-            <div
-                class="bg-highlight  pl-8 pr-1  w-[160px] py-2 flex gap-3 rounded-full mt-8 items-center justify-center">
-                <p class="text-sm font-poppins font-medium text-white">Shop Now</p>
-                <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center p-1">
-                    <div class="h-3 w-3"> <img src="vegetables.png" class="object-cover w-full h-full"></div>
+            <a href="{{ route('products') }}">
+                <div
+                    class="bg-highlight  pl-8 pr-1  w-[160px] py-2 flex gap-3 rounded-full mt-8 items-center justify-center cursor-pointer">
+                    <p class="text-sm font-poppins font-medium text-white">Shop Now</p>
+                    <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center p-1">
+                        <div class="h-3 w-3"> <img src="vegetables.png" class="object-cover w-full h-full"></div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
         </div>
         <div class="w-full h-[400px] transfrom -translate-y-[5%] ">
@@ -51,79 +53,101 @@
     </div>
 
     <div class="py-12">
-        <div class="flex justify-between items-center">
-            <h2 class="text-2xl tracking-relaxed leading-relaxed font-medium font-poppins">Seasonals Items</h2>
-            <div
-                class="gap-2 border rounded-sm  border-[#000000] px-5 py-2 flex hover:border-none hover:bg-highlight hover:text-white transition-all smooth cursor-pointer">
-                <p class="text-xs font-poppins">View More</p>
-                <x-heroicon-s-arrow-up-right class="w-4 h-4" />
+        <!-- Dynamic Category Sections -->
+        @foreach ($categoriesWithProducts as $category)
+            <div class="mb-16">
+                <!-- Category Header -->
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl tracking-relaxed leading-relaxed font-medium font-poppins">
+                        {{ $category->name }}
+                    </h2>
+                    <a href="{{ route('products', $category->slug) }}"
+                        class="gap-2 border rounded-sm border-[#000000] px-5 py-2 flex hover:border-none hover:bg-highlight hover:text-white transition-all smooth cursor-pointer">
+                        <p class="text-xs font-poppins">View More</p>
+                        <x-heroicon-s-arrow-up-right class="w-4 h-4" />
+                    </a>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="pt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    @foreach ($category->products as $product)
+                        <div
+                            class="bg-white rounded-3xl p-5 h-fit flex flex-col items-center relative shadow-sm hover:shadow-md transition-shadow {{ $product->stock_quantity == 0 ? 'opacity-70' : '' }}">
+
+                            <!-- Stock Status Badge -->
+                            @if ($product->stock_quantity == 0)
+                                <div
+                                    class="absolute top-2 left-2 z-60 bg-red-100 text-red-600 text-xs p-1 rounded-full font-inter font-normal tracking-tight">
+                                    Out of Stock
+                                </div>
+                            @elseif($product->stock_quantity < 10)
+                                <div
+                                    class="absolute top-2 left-2 z-60 bg-orange-100 text-highlight text-xs p-1 rounded-full font-inter font-normal">
+                                    Low Stock
+                                </div>
+                            @endif
+
+
+
+                            <!-- Product Image - SIMPLIFIED -->
+                            <a href={{ route('product-details', $product->slug) }}>
+                                <div class="h-[100px] w-full flex justify-center">
+                                    @if ($product->first_image_url)
+                                        <img src="{{ $product->first_image_url }}" alt="{{ $product->name }}"
+                                            class="object-contain w-full h-full {{ $product->stock_quantity == 0 ? 'grayscale' : '' }}"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center {{ $product->stock_quantity == 0 ? 'grayscale' : '' }}"
+                                            style="display: none;">
+                                            <span class="text-gray-400 text-sm">Image not found</span>
+                                        </div>
+                                    @else
+                                        <div
+                                            class="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center {{ $product->stock_quantity == 0 ? 'grayscale' : '' }}">
+                                            <span class="text-gray-400 text-sm">No Image</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </a>
+
+
+                            <!-- Product Info -->
+                            <div class="mt-2 flex-1 w-full">
+                                <h3
+                                    class="text-lg font-medium font-poppins text-center line-clamp-1 {{ $product->stock_quantity == 0 ? 'text-gray-500' : '' }}">
+                                    {{ $product->name }}
+                                </h3>
+                                <p
+                                    class="font-inter tracking-tight line-spacing-1 font-medium text-gray-500 text-sm text-center mt-1">
+                                    {{ $category->name }} / {{ $product->unit_type }}
+                                </p>
+                            </div>
+
+                            <!-- Price and Add Button -->
+                            <div class="flex flex-col items-center  w-full mt-2">
+                                <h4
+                                    class="text-md font-medium font-poppins {{ $product->stock_quantity == 0 ? 'text-gray-400' : 'text-highlight' }}">
+                                    NPR. {{ number_format($product->price, 2) }}
+                                </h4>
+
+                              
+                                <button wire:click="addToCart({{ $product->id }})"
+                                    class="bg-highlight text-white p-2 rounded-full hover:bg-opacity-90 transition-colors {{ $product->stock_quantity == 0 ? 'bg-gray-400 cursor-not-allowed' : '' }}"
+                                    {{ $product->stock_quantity == 0 ? 'disabled' : '' }} wire:loading.attr="disabled">
+                                    <x-heroicon-o-plus-circle class="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-        </div>
-        <div class="pt-8 grid grid-cols-5 gap-4">
-            <div class="bg-white rounded-3xl fit p-5 h-[230px] flex flex-col items-center relative">
-                <div class="h-[100px] ">
-                    <img src="https://png.pngtree.com/png-clipart/20250416/original/pngtree-red-capsicum-png-image_20700375.png"
-                        class="object-contain cl
-                    w-full h-full">
-                </div>
-                <div class=" mt-2 ">
-                    <h3 class="text-xl font-medium font-poppins text-center">Capsicum</h3>
-                    <p class="font-inter tracking-tight line-spacing-1 font-medium text-gray-500 text-sm text-center">
-                        Leaf Vegetables / kg</p>
-                </div>
-                <div class="flex items-end justify-center relative">
-                    <h4 class="mt-4 text-md  font-medium font-poppins text-highlight text-center ">NPR.80</h4>
-                    <x-heroicon-o-plus-circle class="w-5 h-5 absolute top-0 -right-15 top-4 cursor-pointer" />
-                </div>
-                <div
-                    class="w-fit h-fit rounded-full p-1 text-white bg-green-400 text-xs tracking-tight font-inter flex justify-center items-center absolute top-2 left-2">
-                    5% off
-                </div>
+        @endforeach
+
+        <!-- No Categories/Products Message -->
+        @if ($categoriesWithProducts->count() == 0)
+            <div class="text-center py-12">
+                <p class="text-gray-500 text-lg">No products available yet.</p>
             </div>
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-        </div>
+        @endif
     </div>
 
-    {{-- dispaly categorywise --}}
-    <div class="py-12">
-        <div class="flex justify-between items-center">
-            <h2 class="text-2xl tracking-relaxed leading-relaxed font-medium font-poppins">Fresh Vegetables</h2>
-            <div
-                class="gap-2 border rounded-sm  border-[#000000] px-5 py-2 flex hover:border-none hover:bg-highlight hover:text-white transition-all smooth cursor-pointer">
-                <p class="text-xs font-poppins">View More</p>
-                <x-heroicon-s-arrow-up-right class="w-4 h-4" />
-            </div>
-        </div>
-        <div class="pt-8 grid grid-cols-5 gap-x-4 gap-y-8">
-            <div class="bg-white rounded-3xl fit p-5 h-[230px] flex flex-col items-center relative">
-                <div class="h-[100px] ">
-                    <img src="https://png.pngtree.com/png-clipart/20250416/original/pngtree-red-capsicum-png-image_20700375.png"
-                        class="object-contain cl
-                    w-full h-full">
-                </div>
-                <div class=" mt-2 ">
-                    <h3 class="text-xl font-medium font-poppins text-center">Capsicum</h3>
-                    <p class="font-inter tracking-tight line-spacing-1 font-medium text-gray-500 text-sm text-center">
-                        Leaf Vegetables / kg</p>
-                </div>
-                <div class="flex items-end justify-center relative">
-                    <h4 class="mt-4 text-md  font-medium font-poppins text-highlight text-center ">NPR.80</h4>
-                    <x-heroicon-o-plus-circle class="w-5 h-5 absolute top-0 -right-15 top-4 cursor-pointer" />
-                </div>
-             
-            </div>
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-            <x-partials.product.card />
-        </div>
-    </div>
 </div>

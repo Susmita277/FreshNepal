@@ -36,15 +36,34 @@
 
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="">
-                    <div class="bg-highlight w-8 h-8 flex justify-center items-center rounded-full cursor-pointer">
-                        <x-heroicon-o-user-circle class="w-5 h-5 text-white " />
-                    </div>
+                    @auth
+                        <div
+                            class="bg-highlight w-8 h-8 flex justify-center items-center rounded-full cursor-pointer text-white font-semibold">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                    @else
+                        <div class="bg-highlight w-8 h-8 flex justify-center items-center rounded-full cursor-pointer">
+                            <x-heroicon-o-user-circle class="w-5 h-5 text-white" />
+                        </div>
+                    @endauth
                 </div>
+
                 <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                    <li><a href="{{ route('user-login') }}">Sign in</a></li>
-                    <li><a href="{{ route('user-register') }}">Sign up</a></li>
+                    @auth
+                        <li><a href="#">Profile</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                        </li>
+                    @else
+                        <li><a href="{{ route('user-login') }}">Sign in</a></li>
+                        <li><a href="{{ route('user-register') }}">Sign up</a></li>
+                    @endauth
                 </ul>
             </div>
+
 
         </li>
     </ul>

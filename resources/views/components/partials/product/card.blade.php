@@ -1,9 +1,9 @@
      <div class="bg-white rounded-3xl fit p-5 h-[230px] flex flex-col items-center relative">
-         <div class="h-[100px] ">
+        <a href="{{route('product-details')}}"> <div class="h-[100px] cursor-pointer">
              <img src="https://png.pngtree.com/png-vector/20240803/ourmid/pngtree-carrot-with-green-top-clipart-illustration---graphic-png-image_13366428.png"
                  class="object-contain cl
                     w-full h-full">
-         </div>
+         </div></a>
          <div class=" mt-2 ">
              <h3 class="text-xl font-medium font-poppins text-center">Fresh Carrot</h3>
              <p class="font-inter tracking-tight line-spacing-1 font-medium text-gray-500 text-sm text-center">

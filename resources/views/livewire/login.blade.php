@@ -2,20 +2,17 @@
 
 <div class="flex justify-center items-center py-24">
     <div class="w-[40%] bg-white p-8 rounded-md">
-     
-        <!-- Login Modal start-->
-        <!-- Login Modal start-->
-        <div>
+             <div>
             <div class="text-center">
                 <h4 class="font-bold text-lg">Agent Login</h4>
                 <span class="text-gray-500 text-center">Welcome back! Please enter your details to access your
                     account.</span>
             </div>
 
-            <form wire:submit.prevent="login" onsubmit="return false" class="space-y-4 pt-8">
+            <form wire:submit.prevent="login" class="space-y-4 pt-8">
                 <!-- Email -->
                 <div>
-                    <input type="email" wire:model="email" wire:keydown.enter.prevent placeholder="Enter Your Email"
+                    <input type="email" wire:model.defer="email" wire:keydown.enter.prevent placeholder="Enter Your Email"
                         class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-md pr-10 outline-none" />
                     @error('email')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -25,7 +22,7 @@
                 <!-- Password -->
                 <div>
                     <div class="relative">
-                        <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model="password"
+                        <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model.defer="password"
                             wire:keydown.enter.prevent placeholder="Enter your password"
                             class="w-full p-2 border border-gray-200 rounded-md pr-10 outline-none focus:border-highlight" />
                         <button type="button" wire:click="togglePassword"
@@ -45,10 +42,8 @@
                     Sign In
                 </button>
 
-                <!-- Rest of your code -->
             </form>
         </div>
-        <!-- Login Modal end -->
     
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="px-24 bg-bg py-2 sticky inset-0 top-0 z-60 ">
+{{-- <div class="px-24 bg-bg py-2 sticky inset-0 top-0 z-60 ">
     <ul class=" items-center grid grid-cols-6 gap-10 justify-center">
         <a href={{ route('home') }}>
             <li class="flex gap-1 items-center cursor-pointer">
@@ -68,4 +68,4 @@
         </li>
     </ul>
 
-</div>
+</div> --}}

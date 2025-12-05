@@ -24,13 +24,14 @@ class Login extends Component
 
             // Redirect based on role
             if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard'); // your Filament or custom admin route
+                return redirect()->route('admin.dashboard'); 
             } elseif ($user->role === 'vendor') {
-                return redirect()->route('vendor.dashboard'); // your vendor dashboard
+                return redirect()->route('vendor.dashboard'); 
             } else {
-                return redirect()->route('home'); // customer home page
+                return redirect()->route('home'); // 
             }
         }
+
 
         session()->flash('error', 'Invalid credentials');
     }

@@ -55,7 +55,7 @@
                                 <label class="w-fit text-gray-500 font-medium text-md font-[var(--font-poppins)] py-2">
                                     City/District *
                                 </label>
-                                <input type="text" wire:model="city"
+                                <input type="text" wire:model.defer="city"
                                     class="w-full text-gray-700 appearance-none rounded-radius border border-gray-200 rounded-md bg-surface-alt px-4 py-3 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight @error('city') border-red-500 @enderror"
                                     placeholder="Enter your city">
                                 @error('city')
@@ -68,7 +68,7 @@
                                 <label class="w-fit text-gray-500 font-medium text-md font-[var(--font-poppins)] py-2">
                                     Area *
                                 </label>
-                                <input type="text" wire:model="area"
+                                <input type="text" wire:model.defer="area"
                                     class="w-full text-gray-700 appearance-none rounded-radius border border-gray-200 rounded-md bg-surface-alt px-4 py-3 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight @error('area') border-red-500 @enderror"
                                     placeholder="Enter your area">
                                 @error('area')

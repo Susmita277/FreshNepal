@@ -27,13 +27,13 @@ class Header extends Component
         $this->cartCount = $cartService->getCartCount();
     }
 
-    public function logout()
-    {
-        auth()->logout();
-        session()->invalidate();
-        session()->regenerateToken();
-        return redirect('/');
-    }
+    // public function logout()
+    // {
+    //     auth()->logout();
+    //     session()->invalidate();
+    //     session()->regenerateToken();
+    //     return redirect('/');
+    // }
 
     public function updatedSearchQuery()
     {

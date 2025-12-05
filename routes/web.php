@@ -8,11 +8,10 @@ use App\Livewire\Product;
 use App\Livewire\ProductDetail;
 use App\Livewire\Register;
 use App\Livewire\Login;
+use App\Livewire\TestWire;
 use App\Livewire\VerifyVendor;
-use App\Livewire\VendorLogin;
 use App\Livewire\VendorRegister;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\RoleMiddleware;
 
 
 
@@ -25,6 +24,7 @@ Route::get('/order-details', OrderDetails::class)->name('order-details');
 Route::get('/user-register', Register::class)->name('user-register');
 Route::get('/user-login', Login::class)->name('user-login');
 Route::get('/vendor/verify', VerifyVendor::class)->name('seller-verify');
+Route::get('/test-wire',TestWire::class)->name('test');
 Route::get('/vendor/register', VendorRegister::class)->name('seller-register');
 
 

@@ -1,4 +1,4 @@
-<div class="relative h-screen bg-bg grid grid-cols-3 gap-10 px-24 py-12 place-items-center">
+{{-- <div class="relative h-screen bg-bg grid grid-cols-3 gap-10 px-24 py-12 place-items-center">
     <div class="col-span-2">
         <div class="flex justify-between mb-10 pr-[20%]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -80,7 +80,7 @@
                 <div class="mt-6">
                     <input
                         class="h-12 w-full rounded-lg border border-gray-300 bg-transparent px-4 text-gray-800 transition-colors duration-200 focus:border-highlight focus:outline-0 focus:ring-0"
-                        placeholder="Enter email" type="email" wire:model="email" wire:loading.attr="disabled" />
+                        placeholder="Enter email" type="email" wire:model.defer="email" wire:loading.attr="disabled" />
                     @error('email')
                         <p class="text-red-500 text-sm font-inter mt-1">{{ $message }}</p>
                     @enderror
@@ -120,8 +120,8 @@
                             <input
                                 class="flex h-14 w-12 rounded-lg border border-gray-300 bg-transparent text-center text-xl font-medium text-gray-800 transition-colors duration-200 [appearance:textfield] focus:border-highlight focus:outline-0 focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                 maxlength="1" type="text" pattern="[0-9]*" inputmode="numeric"
-                                wire:model="otp.{{ $index }}" wire:key="otp-{{ $index }}"
-                                id="otp-{{ $index }}" wire:loading.attr="disabled" x-data
+                                wire:model.defer="otp.{{ $index }}" wire:key="otp-{{ $index }}"
+                                id="otp-{{ $index }}" wire:loading.attr="disabled" 
                                 x-on:input="if($event.target.value.length === 1 && {{ $index }} < 5) { 
                         document.getElementById('otp-{{ $index + 1 }}').focus(); 
                     } else if($event.target.value.length === 1 && {{ $index }} === 5) {
@@ -201,4 +201,4 @@
             }
         });
     </script>
-@endscript
+@endscript --}}

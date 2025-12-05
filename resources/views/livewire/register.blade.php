@@ -5,11 +5,11 @@
             <span class="text-gray-500">Join us! Enter your details to create an account.</span>
         </div>
 
-        <form wire:submit.prevent="register"  class="space-y-4 mt-8">
+        <form wire:submit.prevent="register"  class="space-y-4 mt-8" >
             <div class="grid grid-cols-2 gap-4">
                 <!-- Name -->
                 <div>
-                    <input type="text" wire:model="name" placeholder="Enter name"
+                    <input type="text" wire:model.defer="name" placeholder="Enter name"
                         class="w-full p-2 border border-gray-300 rounded-md outline-none">
                     @error('name')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -18,7 +18,7 @@
 
                 <!-- Phone -->
                 <div>
-                    <input type="text" wire:model="phone" placeholder="Enter your number"
+                    <input type="text" wire:model.defer="phone" placeholder="Enter your number"
                         class="w-full p-2 border border-gray-300 rounded-md outline-none">
                     @error('phone')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -27,7 +27,7 @@
 
                 <!-- Email -->
                 <div class="col-span-2">
-                    <input type="email" wire:model="email" placeholder="Enter Email"
+                    <input type="email" wire:model.defer="email" placeholder="Enter Email"
                         class="w-full p-2 border border-gray-300 rounded-md outline-none">
                     @error('email')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -37,7 +37,7 @@
                 <!-- Password -->
                 <div>
                     <div class="relative">
-                        <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model="password"
+                        <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model.defer="password"
                             placeholder="Enter your password"
                             class="w-full p-2 border border-gray-300 rounded-md pr-10 outline-none focus:border-highlight" />
                         <button type="button" 
@@ -73,7 +73,7 @@
                 <!-- Confirm Password -->
                 <div>
                     <div class="relative">
-                        <input type="{{ $showPasswordConf ? 'text' : 'password' }}" wire:model="password_confirmation"
+                        <input type="{{ $showPasswordConf ? 'text' : 'password' }}" wire:model.defer="password_confirmation"
                             placeholder="Confirm your password"
                             class="w-full p-2 border border-gray-300 rounded-md pr-10 outline-none focus:border-highlight" />
                         <button type="button" 

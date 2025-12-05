@@ -1,4 +1,4 @@
-<div class=" relative h-screen bg-bg flex justify-between  gap-5  px-24 py-12 place-items-center">
+{{-- <div class=" relative h-screen bg-bg flex justify-between  gap-5  px-24 py-12 place-items-center">
     <div class="w-[60%]">
 
         <div class="flex justify-between mb-10 pr-[20%]">
@@ -66,7 +66,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <!-- Name -->
                     <div>
-                        <input type="text" wire:model="name" placeholder="Enter store  name"
+                        <input type="text" wire:model.defer="name" placeholder="Enter store  name"
                             class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-md pr-10 outline-none focus:border-highlight" />
                         @error('name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -75,7 +75,7 @@
 
                     <!-- Phone -->
                     <div>
-                        <input type="tel" wire:model="phone" placeholder="Enter your number"
+                        <input type="tel" wire:model.defer="phone" placeholder="Enter your number"
                             class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-md pr-10 outline-none focus:border-highlight" />
                         @error('phone')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -84,7 +84,7 @@
 
                     <!-- Email -->
                     <div class="col-span-2">
-                        <input type="email" wire:model="email" placeholder="Enter Email"
+                        <input type="email" wire:model.defer="email" placeholder="Enter Email"
                             class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-md pr-10 outline-none focus:border-highlight" />
                         @error('email')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -92,7 +92,7 @@
                     </div>
                     <div>
                         <div class="relative">
-                            <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model="password"
+                            <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model.defer="password"
                                 placeholder="Enter your password"
                                 class="w-full p-2 border border-gray-200 rounded-md pr-10 outline-none focus:border-highlight" />
                             <button type="button" wire:click="togglePassword"
@@ -126,7 +126,7 @@
                     <div>
                         <div class="relative">
                             <input type="{{ $showConfirmPassword ? 'text' : 'password' }}"
-                                wire:model="password_confirmation" placeholder="Confirm Your Password"
+                                wire:model.defer="password_confirmation" placeholder="Confirm Your Password"
                                 class="w-full p-2 border border-gray-200 rounded-md pr-10 outline-none focus:border-highlight" />
                             <button type="button" wire:click="toggleConfirmPassword"
                                 class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
@@ -194,4 +194,4 @@
     <!-- signup modal end -->
 
 
-</div>
+</div> --}}

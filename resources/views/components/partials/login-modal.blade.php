@@ -8,7 +8,7 @@
     <form wire:submit.prevent="login" class="space-y-4 pt-8">
         <!-- Email -->
         <div>
-            <input type="email" wire:model="email" placeholder="Enter Your Email"
+            <input type="email" wire:model.defer="email" placeholder="Enter Your Email"
                 class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-md pr-10 outline-none" />
             @error('email')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -16,7 +16,7 @@
         </div>
         <div>
             <div class="relative">
-                <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model="password"
+                <input type="{{ $showPassword ? 'text' : 'password' }}" wire:model.defer="password"
                     placeholder="Enter your password"
                     class="w-full p-2 border border-gray-200 rounded-md pr-10 outline-none focus:border-highlight" />
                 <button type="button" wire:click="togglePassword"

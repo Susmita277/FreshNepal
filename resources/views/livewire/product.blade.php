@@ -7,12 +7,12 @@
         @endif
     </h2>
 
-    <div class="grid grid-cols-5 gap-10 relative mt-8">
+    <div class="grid grid-cols-5 gap-10 relative mt-8" >
         <!-- Filter Sidebar -->
         <div class="w-full sticky top-10 left-0 bottom-0 h-fit">
             <div class="flex justify-between items-center">
                 <h4 class="text-lg tracking-tight font-medium font-poppins">Filter Options</h4>
-                <button wire:click="clearFilters"
+                <button wire:click="clearFilters" type="button"
                     class="text-sm text-highlight hover:underline {{ empty($selectedCategories) && empty($priceSort) && empty($search) ? 'opacity-50 cursor-not-allowed' : '' }}"
                     {{ empty($selectedCategories) && empty($priceSort) && empty($search) ? 'disabled' : '' }}>
                     Clear all
@@ -26,7 +26,7 @@
                 <h4 class="text-md tracking-relaxed font-medium font-inter text-gray-800 mb-2">Category</h4>
                 @foreach ($categories as $category)
                     <li class="flex gap-x-2 my-2 items-center">
-                        <input type="checkbox" wire:model.live="selectedCategories" value="{{ $category->id }}"
+                        <input type="checkbox" wire:model.defer="selectedCategories" value="{{ $category->id }}"
                             id="category_{{ $category->id }}"
                             class="rounded border-gray-300 text-highlight focus:ring-highlight">
                         <label for="category_{{ $category->id }}"
@@ -43,7 +43,7 @@
             <ul class="mt-6">
                 <h4 class="text-md tracking-relaxed font-medium font-inter text-gray-800 mb-2">Price</h4>
                 <li class="flex gap-x-2 my-2 items-center">
-                    <input type="radio" wire:model.live="priceSort" value="high_to_low" id="price_high_low"
+                    <input type="radio" wire:model.defer="priceSort" value="high_to_low" id="price_high_low"
                         name="priceSort" class="border-gray-300 text-highlight focus:ring-highlight">
                     <label for="price_high_low"
                         class="text-md tracking-relaxed font-medium font-inter text-gray-800 cursor-pointer">
@@ -51,7 +51,7 @@
                     </label>
                 </li>
                 <li class="flex gap-x-2 my-2 items-center">
-                    <input type="radio" wire:model.live="priceSort" value="low_to_high" id="price_low_high"
+                    <input type="radio" wire:model.defer="priceSort" value="low_to_high" id="price_low_high"
                         name="priceSort" class="border-gray-300 text-highlight focus:ring-highlight">
                     <label for="price_low_high"
                         class="text-md tracking-relaxed font-medium font-inter text-gray-800 cursor-pointer">
@@ -59,7 +59,7 @@
                     </label>
                 </li>
                 <li class="flex gap-x-2 my-2 items-center">
-                    <input type="radio" wire:model.live="priceSort" value="" id="price_none" name="priceSort"
+                    <input type="radio" wire:model.defer="priceSort" value="" id="price_none" name="priceSort"
                         class="border-gray-300 text-highlight focus:ring-highlight">
                     <label for="price_none"
                         class="text-md tracking-relaxed font-medium font-inter text-gray-800 cursor-pointer">
@@ -97,7 +97,7 @@
                 Showing {{ $products->count() }} product(s)
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" >
                 @foreach ($products as $product)
                     <div
                         class="bg-white rounded-3xl p-5 h-[280px] flex flex-col items-center relative shadow-sm hover:shadow-md transition-shadow">
@@ -146,7 +146,7 @@
                             </h4>
 
                           
-                            <button wire:click="addToCart({{ $product->id }})"
+                            <button wire:click="addToCart({{ $product->id }})" type="button"
                                 class="bg-highlight text-white p-2 rounded-full hover:bg-opacity-90 transition-colors {{ $product->stock_quantity == 0 ? 'bg-gray-400 cursor-not-allowed' : '' }}"
                                 {{ $product->stock_quantity == 0 ? 'disabled' : '' }} wire:loading.attr="disabled">
                                 <x-heroicon-o-plus-circle class="w-5 h-5" />
@@ -170,7 +170,7 @@
                 <div class="text-center py-12">
                     <p class="text-gray-500 text-lg">No products found matching your criteria.</p>
                     @if (!empty($selectedCategories) || !empty($priceSort) || !empty($search))
-                        <button wire:click="clearFilters" class="mt-4 text-highlight hover:underline">
+                        <button wire:click="clearFilters" class="mt-4 text-highlight hover:underline" type="button">
                             Clear filters to see all products
                         </button>
                     @endif

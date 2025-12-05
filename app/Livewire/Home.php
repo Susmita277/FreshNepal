@@ -4,11 +4,13 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Category;
-use App\Models\Product;
-use App\Services\CartService;
+use Usernotnull\Toast\Concerns\WireToast;
 
-class Home extends Component
-{
+class Home extends Component 
+{ 
+
+    use WireToast;
+
     public $categoriesWithProducts;
 
     public function mount()
@@ -27,30 +29,29 @@ class Home extends Component
     }
     public function addToCart($productId)
     {
-        $cartService = new CartService();
-        $success = $cartService->addToCart($productId);
+        return true;
+        // $cartService = new CartService();
+        // $success = $cartService->addToCart($productId);
 
-        if ($success) {
+        // if ($success) {
             // Emit event to update header
-            $this->dispatch('cartUpdated');
+            // $this->dispatch('cartUpdated');
 
-            // Show toast notification
-            $this->dispatch('toast', [
-                'type' => 'success',
-                'message' => 'Product added to cart successfully!'
-            ]);
-        } else {
-            $this->dispatch('toast', [
-                'type' => 'error',
-                'message' => 'Failed to add product to cart.'
-            ]);
-        }
+            // // Show toast notification
+            // $this->dispatch('toast', [
+            //     'type' => 'success',
+            //     'message' => 'Product added to cart successfully!'
+            // ]);
+        // } else {
+            // $this->dispatch('toast', [
+            //     'type' => 'error',
+            //     'message' => 'Failed to add product to cart.'
+            // ]);
+        // }
     }
 
     public function render()
     {
-        return view('livewire.home', [
-            'categoriesWithProducts' => $this->categoriesWithProducts
-        ]);
+        return view('livewire.home');
     }
 }

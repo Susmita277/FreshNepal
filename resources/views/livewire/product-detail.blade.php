@@ -24,50 +24,7 @@
         </div>
     @else
         <div>
-            <section class="font-forum overflow-hidden lg:pb-12 pb-6 grid lg:grid-cols-2 lg:gap-20">
-                <!-- Product Images -->
-                {{-- <div class="grid gap-6 sticky top-20">
-                    <!-- Main Image -->
-                    <div class="flex justify-center">
-                        <div
-                            class="lg:h-[350px] lg:w-[500px] h-[250px] border border-gray-200 rounded-lg bg-gray-50 flex items-center justify-center">
-                            @if ($selectedImage)
-                                <!-- Test if image exists -->
-                                <img alt="{{ $product->name }}" src="{{ asset('storage/' . $selectedImage) }}"
-                                    class="w-full h-full object-contain object-center rounded-lg"
-                                    onerror="console.log('Image failed to load: {{ $selectedImage }}'); this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div
-                                    class="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center hidden">
-                                    <div class="text-center">
-                                        <span class="text-gray-400 text-sm block">Image not found:</span>
-                                        <span class="text-gray-500 text-xs block mt-1">"{{ $selectedImage }}"</span>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="text-center">
-                                    <span class="text-gray-400 text-sm block">No Image Selected</span>
-                                    <span class="text-gray-500 text-xs block mt-1">selectedImage is:
-                                        {{ $selectedImage ?? 'NULL' }}</span>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    <!-- Thumbnails - Only show if we have multiple images -->
-                    @if ($product->image && is_array($product->image) && count($product->image) > 1)
-                        <div class="gap-4 flex items-center justify-center">
-                            @foreach ($product->image as $image)
-                                <div class="h-[80px] w-[80px] cursor-pointer border-2 rounded-lg {{ $selectedImage === $image ? 'border-highlight' : 'border-gray-200' }}"
-                                    wire:click="selectImage('{{ $image }}')">
-                                    <img alt="Thumbnail" src="{{ asset('storage/' . $image) }}"
-                                        class="w-full h-full object-contain object-center rounded">
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div> --}}
-                <!-- Product Images -->
-
+            <section class="font-forum overflow-hidden lg:pb-12 pb-6 grid lg:grid-cols-2 lg:gap-20" >
                 <div class="grid gap-6">
                     <!-- Main Image -->
                     <div class="flex justify-center">
@@ -157,7 +114,7 @@
                         <div class="flex items-center gap-4 mt-4">
                             <div class="border border-gray-200 rounded-md p-1 grid grid-cols-3 gap-1 w-[120px]">
                                 <!-- Decrease -->
-                                <button wire:click="decreaseQuantity"
+                                <button wire:click="decreaseQuantity" type="button"
                                     class="p-1 rounded-md bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -171,7 +128,7 @@
                                 </div>
 
                                 <!-- Increase -->
-                                <button wire:click="increaseQuantity"
+                                <button wire:click="increaseQuantity" type="button"
                                     class="p-1 rounded-md bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -184,7 +141,7 @@
                             <!-- Manual Input -->
                             <div class="flex items-center gap-2">
                                 <span class="text-gray-600 text-sm">or enter:</span>
-                                <input type="number" wire:model.live="quantity"
+                                <input type="number" wire:model.defer="quantity"
                                     step="{{ $unitType === 'kg' ? '0.5' : '1' }}"
                                     min="{{ $unitType === 'kg' ? '0.5' : '1' }}"
                                     class="w-20 p-1 border border-gray-300 rounded text-center focus:border-highlight focus:ring-0">
@@ -216,12 +173,12 @@
 
                     <!-- Action Buttons -->
                     <div class="flex gap-6 mt-10">
-                        <button wire:click="buyNow"
+                        <button wire:click="buyNow" type="button"
                             class="outline-none border-highlight border w-[160px] py-3 flex gap-3 rounded-full items-center justify-center text-highlight px-5 hover:bg-highlight hover:text-white transition-colors {{ $product->stock_quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                             {{ $product->stock_quantity == 0 ? 'disabled' : '' }}>
                             Buy Now
                         </button>
-                        <button wire:click="addToCart"
+                        <button wire:click="addToCart" type="button"
                             class="outline-none bg-highlight w-[160px] py-3 flex gap-3 rounded-full items-center justify-center text-white px-5 hover:bg-opacity-90 transition-colors {{ $product->stock_quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                             {{ $product->stock_quantity == 0 ? 'disabled' : '' }}>
                             Add to Cart

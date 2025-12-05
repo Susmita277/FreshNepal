@@ -1,4 +1,4 @@
-    <div x-data="otpForm()" x-init="startTimer()">
+    {{-- <div x-data="otpForm()" x-init="startTimer()">
 
         <div class="flex flex-col" x-show="!otpSent">
             <h1 class="font-display text-2xl font-bold text-gray-800 dark:text-gray-100 text-center">
@@ -10,7 +10,7 @@
             <div class="mt-6">
                 <input
                     class="h-12 w-full rounded-lg border border-gray-300 bg-transparent px-4 text-gray-800 transition-colors duration-200 focus:border-highlight focus:outline-0 focus:ring-0 dark:border-gray-600 dark:text-gray-200 dark:focus:border-highlight"
-                    placeholder="Enter email " type="text" wire:model="email" />
+                    placeholder="Enter email " type="text" wire:model.defer="email" />
                 @error('email')
                     <p class="text-red-500 text-sm font-inter">{{ $message }}</p>
                 @enderror
@@ -34,7 +34,7 @@
                     <template x-for="('digit,'index') in 6" :key="index">
                         <input
                             class="flex h-14 w-12 rounded-lg border border-gray-300 bg-transparent text-center text-xl font-medium text-gray-800 transition-colors duration-200 [appearance:textfield] focus:border-highlight focus:outline-0 focus:ring-0 dark:border-gray-600 dark:text-gray-200 dark:focus:border-highlight [&amp;::-webkit-inner-spin-button]:appearance-none [&amp;::-webkit-outer-spin-button]:appearance-none"
-                            maxlength="6" type="number" value="" wire:model="otp[index]" x-ref="otpField" />
+                            maxlength="6" type="number" value="" wire:model.defer="otp[index]" x-ref="otpField" />
                     </template>
 
                 </fieldset>
@@ -65,4 +65,4 @@
         #otp-form:target~#otp-form {
             display: none;
         }
-    </style>
+    </style> --}}

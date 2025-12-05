@@ -44,20 +44,20 @@ class Product extends Component
         }
     }
 
-    public function updatedSelectedCategories()
-    {
-        // This will automatically refresh when categories change
-    }
+    // public function updatedSelectedCategories()
+    // {
+    //     // This will automatically refresh when categories change
+    // }
 
-    public function updatedPriceSort()
-    {
-        // This will automatically refresh when price sort changes
-    }
+    // public function updatedPriceSort()
+    // {
+    //     // This will automatically refresh when price sort changes
+    // }
 
-    public function updatedSearch()
-    {
-        // This will automatically refresh when search changes
-    }
+    // public function updatedSearch()
+    // {
+    //     // This will automatically refresh when search changes
+    // }
 
     public function clearFilters()
     {
@@ -99,7 +99,6 @@ class Product extends Component
             // Default sorting
             $query->orderBy('created_at', 'desc');
         }
-
         return $query->get();
     }
 

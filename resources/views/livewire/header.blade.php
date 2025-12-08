@@ -28,8 +28,8 @@
                 <p
                     class="flex text-sm font-inter tracking-tight font-medium text-gray-700 cursor-pointer hover:text-highlight">
                     Become a seller
+                </p>
             </a>
-            </p>
             <a href="{{ route('products') }}">
                 <p
                     class="flex text-sm font-inter tracking-tight font-medium text-gray-700 cursor-pointer hover:text-highlight">

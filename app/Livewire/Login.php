@@ -24,11 +24,11 @@ class Login extends Component
 
             // Redirect based on role
             if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard'); 
+                return route('admin.dashboard'); 
             } elseif ($user->role === 'vendor') {
-                return redirect()->route('vendor.dashboard'); 
+                return route('vendor.dashboard'); 
             } else {
-                return redirect()->route('home'); // 
+                return route('home'); // 
             }
         }
 

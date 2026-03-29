@@ -1,4 +1,4 @@
-{{-- <div class=" relative h-screen bg-bg flex justify-between  gap-5  px-24 py-12 place-items-center">
+<div class=" relative h-screen bg-bg flex justify-between  gap-5  px-24 py-12 place-items-center">
     <div class="w-[60%]">
 
         <div class="flex justify-between mb-10 pr-[20%]">
@@ -36,14 +36,9 @@
             Enjoy free shipping upto 1 month!</h4>
     </div>
 
-
-
-
-
     <!-- Signup Modal start -->
     <div class="flex justify-center items-center py-24 w-[40%]">
         <div class="bg-white p-5 rounded-md">
-            <!-- Success/Error Messages -->
             @if (session()->has('success'))
                 <div class="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-md text-center">
                     {{ session('success') }}
@@ -99,14 +94,12 @@
                                 class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                                 aria-label="{{ $showPassword ? 'Hide password' : 'Show password' }}">
                                 @if ($showPassword)
-                                    <!-- Eye slash icon (password visible) -->
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                                     </svg>
                                 @else
-                                    <!-- Eye icon (password hidden) -->
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -122,7 +115,7 @@
                         @enderror
                     </div>
 
-                    <!-- Confirm Password Field with Livewire Toggle -->
+               
                     <div>
                         <div class="relative">
                             <input type="{{ $showConfirmPassword ? 'text' : 'password' }}"
@@ -132,14 +125,12 @@
                                 class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                                 aria-label="{{ $showConfirmPassword ? 'Hide password' : 'Show password' }}">
                                 @if ($showConfirmPassword)
-                                    <!-- Eye slash icon (password visible) -->
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                                     </svg>
                                 @else
-                                    <!-- Eye icon (password hidden) -->
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -153,13 +144,6 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
-                <!-- Submit Button -->
                 <button type="submit" wire:loading.attr="disabled"
                     class="text-sm font-medium font-poppins bg-highlight py-2 px-5 text-white rounded-md w-full mt-4 hover:bg-opacity-90 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
                     <span wire:loading.remove wire:target="registerVendor">Create Account</span>
@@ -194,4 +178,4 @@
     <!-- signup modal end -->
 
 
-</div> --}}
+</div>

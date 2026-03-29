@@ -1,4 +1,4 @@
-{{-- <div class="relative h-screen bg-bg grid grid-cols-3 gap-10 px-24 py-12 place-items-center">
+<div class="relative h-screen bg-bg grid grid-cols-3 gap-10 px-24 py-12 place-items-center">
     <div class="col-span-2">
         <div class="flex justify-between mb-10 pr-[20%]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -33,7 +33,6 @@
         </h4>
     </div>
 
-    <!-- Success/Error Messages -->
     @if (session()->has('success'))
         <div
             class="fixed top-14 right-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded shadow-lg z-50">
@@ -58,7 +57,6 @@
                     Enter your email and we'll send you a verification code.
                 </p>
 
-                <!-- User exists error message -->
                 @if ($errorMessage && str_contains($errorMessage, 'already exists'))
                     <div class="mt-4 p-3 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded-md text-center">
                         {{ $errorMessage }}
@@ -105,7 +103,6 @@
                 </div>
             </div>
         @else
-            <!-- Verify OTP Form -->
             <div class="flex-col">
                 <h1 class="font-display text-2xl font-bold text-gray-800 text-center">
                     Enter Verification Code
@@ -186,12 +183,10 @@
             }, 1000);
         });
 
-        // Handle auto-verify when last digit is entered
         Livewire.on('auto-verify', () => {
             $wire.verifyOtp();
         });
 
-        // Handle focus next (backup method)
         Livewire.on('focus-next', ({
             index
         }) => {
@@ -201,4 +196,4 @@
             }
         });
     </script>
-@endscript --}}
+@endscript

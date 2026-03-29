@@ -28,7 +28,6 @@
                         <button type="button" wire:click="togglePassword"
                             class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                             aria-label="{{ $showPassword ? 'Hide password' : 'Show password' }}">
-                            <!-- Icons remain the same -->
                         </button>
                     </div>
                     @error('password')

@@ -53,10 +53,8 @@
     </div>
 
     <div class="py-12">
-        <!-- Dynamic Category Sections -->
         @foreach ($categoriesWithProducts as $category)
             <div class="mb-16">
-                <!-- Category Header -->
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl tracking-relaxed leading-relaxed font-medium font-poppins">
                         {{ $category->name }}
@@ -68,13 +66,11 @@
                     </a>
                 </div>
 
-                <!-- Products Grid -->
                 <div class="pt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                     @foreach ($category->products as $product)
                         <div
                             class="bg-white rounded-3xl p-5 h-fit flex flex-col items-center relative shadow-sm hover:shadow-md transition-shadow {{ $product->stock_quantity == 0 ? 'opacity-70' : '' }}">
 
-                            <!-- Stock Status Badge -->
                             @if ($product->stock_quantity == 0)
                                 <div
                                     class="absolute top-2 left-2 z-60 bg-red-100 text-red-600 text-xs p-1 rounded-full font-inter font-normal tracking-tight">
@@ -89,7 +85,6 @@
 
 
 
-                            <!-- Product Image - SIMPLIFIED -->
                             <a href={{ route('product-details', $product->slug) }}>
                                 <div class="h-[100px] w-full flex justify-center">
                                     @if ($product->first_image_url)
@@ -142,7 +137,6 @@
             </div>
         @endforeach
 
-        <!-- No Categories/Products Message -->
         @if ($categoriesWithProducts->count() == 0)
             <div class="text-center py-12">
                 <p class="text-gray-500 text-lg">No products available yet.</p>

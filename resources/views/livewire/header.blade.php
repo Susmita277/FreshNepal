@@ -10,7 +10,6 @@
         </a>
 
         <li class="col-span-3 flex justify-end relative">
-            <!-- Search Input - Standalone (not inside any form) -->
             <div class="w-full px-5 py-2 rounded-full bg-white flex justify-between items-center border border-gray-200">
                 <input type="text" wire:model.defer.debounce.300ms="searchQuery" wire:click.outside="closeSearchDropdown"
                     placeholder="Search products..." class="bg-transparent border-none outline-none w-full focus:ring-0">

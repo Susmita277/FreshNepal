@@ -6,7 +6,6 @@
             <span class="text-lg text-gray-600"> - Search: "{{ $this->search }}"</span>
         @endif
     </h2>
-
     <div class="grid grid-cols-5 gap-10 relative mt-8" >
         <!-- Filter Sidebar -->
         <div class="w-full sticky top-10 left-0 bottom-0 h-fit">
@@ -18,8 +17,6 @@
                     Clear all
                 </button>
             </div>
-
-
 
             <!-- Category Filter -->
             <ul class="mt-6">
@@ -68,7 +65,6 @@
                 </li>
             </ul>
 
-            <!-- Active Filters Summary -->
             @if (!empty($selectedCategories) || !empty($priceSort))
                 <div class="mt-6 p-3 bg-gray-50 rounded-md">
                     <h5 class="text-sm font-medium text-gray-700 mb-2">Active Filters:</h5>
@@ -90,9 +86,7 @@
             @endif
         </div>
 
-        <!-- Products Grid -->
         <div class="col-span-4">
-            <!-- Results Count -->
             <div class="mb-4 text-sm text-gray-600">
                 Showing {{ $products->count() }} product(s)
             </div>
@@ -102,7 +96,6 @@
                     <div
                         class="bg-white rounded-3xl p-5 h-[280px] flex flex-col items-center relative shadow-sm hover:shadow-md transition-shadow">
 
-                        <!-- Stock Status Badge -->
                         @if ($product->stock_quantity == 0)
                             <div
                                 class="absolute top-2 right-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-medium">
@@ -115,7 +108,6 @@
                             </div>
                         @endif
 
-                        <!-- Product Image -->
                         <a href="{{ route('product-details', $product->slug) }}" class="w-full">
                             <div class="h-[120px] w-full flex justify-center mb-3">
                                 @if ($product->first_image_url)
@@ -129,7 +121,6 @@
                             </div>
                         </a>
 
-                        <!-- Product Info -->
                         <div class="mt-2 flex-1 w-full text-center">
                             <h3 class="text-lg font-medium font-poppins line-clamp-1">
                                 {{ $product->name }}
@@ -139,7 +130,6 @@
                             </p>
                         </div>
 
-                        <!-- Price and Add Button -->
                         <div class="flex items-center justify-between w-full mt-3">
                             <h4 class="text-md font-medium font-poppins text-highlight">
                                 NPR. {{ number_format($product->price, 2) }}
@@ -153,9 +143,7 @@
                             </button>
                         </div>
 
-                        <!-- Discount Badge (if you add discount functionality later) -->
                         @if (false)
-                            <!-- Replace with your discount logic -->
                             <div
                                 class="absolute top-2 left-2 w-fit h-fit rounded-full p-1 text-white bg-green-400 text-xs tracking-tight font-inter">
                                 20% off
@@ -165,7 +153,6 @@
                 @endforeach
             </div>
 
-            <!-- No Products Message -->
             @if ($products->count() == 0)
                 <div class="text-center py-12">
                     <p class="text-gray-500 text-lg">No products found matching your criteria.</p>

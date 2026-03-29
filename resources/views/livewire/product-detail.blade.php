@@ -26,7 +26,6 @@
         <div>
             <section class="font-forum overflow-hidden lg:pb-12 pb-6 grid lg:grid-cols-2 lg:gap-20" >
                 <div class="grid gap-6">
-                    <!-- Main Image -->
                     <div class="flex justify-center">
                         <div
                             class="lg:h-[400px] lg:w-[500px] h-[250px] border border-gray-200 rounded-lg bg-gray-50 overflow-hidden rounded-lg">
@@ -34,7 +33,6 @@
                                 <img alt="{{ $product->name }}" src="{{ $selectedImage }}"
                                     class="w-full h-full object-contain object-center ">
 
-                                <!-- Fallback when image fails to load -->
                                 <div id="fallback-image"
                                     class="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center hidden">
                                     <div class="text-center">
@@ -57,7 +55,6 @@
                     </div>
 
                    
-                    <!-- Thumbnails with Livewire - Show even if only one image -->
                     @if ($product->image && is_array($product->image) && count($product->image) > 0)
                         <div class="flex gap-4 justify-center items-center flex-wrap">
                             @foreach ($product->image as $image)
@@ -78,9 +75,7 @@
                     @endif
                 </div>
 
-                <!-- Product Info -->
                 <div class="lg:mt-0 mt-4 sticky top-20">
-                    <!-- Stock Status -->
                     @if ($product->stock_quantity == 0)
                         <div class="mb-4 bg-red-100 text-red-600 text-sm px-3 py-2 rounded-md inline-block">
                             Out of Stock
@@ -122,12 +117,10 @@
                                     </svg>
                                 </button>
 
-                                <!-- Quantity Display -->
                                 <div class="flex items-center justify-center font-semibold text-gray-800">
                                     <span>{{ $quantity }}</span>
                                 </div>
 
-                                <!-- Increase -->
                                 <button wire:click="increaseQuantity" type="button"
                                     class="p-1 rounded-md bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -138,7 +131,6 @@
                                 </button>
                             </div>
 
-                            <!-- Manual Input -->
                             <div class="flex items-center gap-2">
                                 <span class="text-gray-600 text-sm">or enter:</span>
                                 <input type="number" wire:model.defer="quantity"
@@ -157,7 +149,6 @@
                             @endif
                         </p>
 
-                        <!-- Price Calculation -->
                         <div class="mt-3 p-3 bg-gray-50 rounded-md">
                             <p class="text-sm text-gray-700">
                                 Total: <span class="font-semibold text-highlight">
@@ -171,7 +162,6 @@
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="flex gap-6 mt-10">
                         <button wire:click="buyNow" type="button"
                             class="outline-none border-highlight border w-[160px] py-3 flex gap-3 rounded-full items-center justify-center text-highlight px-5 hover:bg-highlight hover:text-white transition-colors {{ $product->stock_quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
@@ -185,7 +175,6 @@
                         </button>
                     </div>
 
-                    <!-- Additional Info -->
                     <div class="mt-8 flex gap-2 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-4 text-gray-500">
@@ -201,7 +190,6 @@
                         </p>
                     </div>
 
-                    <!-- Product Details -->
                     <div class="mt-6 border-t border-gray-200 pt-6">
                         <h4 class="text-lg font-medium font-poppins mb-3">Product Details</h4>
                         <div class="grid grid-cols-2 gap-4 text-sm">

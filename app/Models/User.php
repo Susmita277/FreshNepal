@@ -18,7 +18,7 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
         'role',
-        'phone', // Add phone if it's in your database
+        'phone', 
     ];
 
     protected $hidden = [
@@ -26,18 +26,16 @@ class User extends Authenticatable implements FilamentUser
         'remember_token',
     ];
 
-    // Add this method - it's REQUIRED for Filament
     public function canAccessPanel(Panel $panel): bool
     {
-        // For vendor panel
         if ($panel->getId() === 'vendor') {
             return $this->role === 'vendor';
         }
         
-        // For admin panel (if you have one)
         if ($panel->getId() === 'admin') {
             return $this->role === 'admin';
         }
+        
         
         return false;
     }

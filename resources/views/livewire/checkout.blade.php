@@ -1,5 +1,4 @@
 <div class="relative">
-    <!-- Flash Messages -->
     @if (session()->has('message'))
         <div class="fixed top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
             {{ session('message') }}
@@ -18,9 +17,7 @@
         </div>
     @endif
 
-    <!-- Checkout Content -->
     <div class="px-24 py-12">
-        <!-- Authentication Check -->
         @if (!Auth::check())
             <div class="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded mb-6">
                 <p>Please <a href="{{ route('user-login') }}" class="underline font-semibold">login</a> to proceed with
@@ -45,12 +42,10 @@
         <form wire:submit.prevent="placeOrder">
             <div class="grid grid-cols-3 justify-center gap-10">
                 <div class="col-span-2">
-                    <!-- Delivery Address Section -->
                     <div class="mb-8 bg-white px-8 py-5 rounded-md shadow-sm">
                         <h3 class="text-xl font-medium font-poppins text-gray-700 mb-6">Delivery Address</h3>
 
                         <div class="grid grid-cols-2 gap-4">
-                            <!-- City Input -->
                             <div class="relative flex w-full flex-col justify-center gap-1">
                                 <label class="w-fit text-gray-500 font-medium text-md font-[var(--font-poppins)] py-2">
                                     City/District *
@@ -166,21 +161,18 @@
                         </div>
 
                         <div class="space-y-4">
-                            <!-- Place Order Button -->
                            <button type="submit" wire:loading.attr="disabled"
                                 class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-highlight text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed">
                                 <span class="truncate">Place Order</span>
                                
                         </button>
 
-                            <!-- Continue Shopping -->
                             <a href="{{ route('products') }}"
                                 class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 border border-gray-300 text-gray-700 text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 transition-colors">
                                 <span class="truncate">Continue Shopping</span>
                             </a>
                         </div>
 
-                        <!-- Security Badge -->
                         <div class="text-center text-xs text-gray-500">
                             <div class="flex items-center justify-center gap-2">
                                 <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">

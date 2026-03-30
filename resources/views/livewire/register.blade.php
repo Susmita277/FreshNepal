@@ -103,7 +103,7 @@
             </div>
 
             <button type="submit"
-                class="text-sm font-medium font-poppins bg-highlight py-2 px-5 text-white rounded-md w-full mt-4">
+                class="text-sm font-medium font-poppins bg-highlight py-2 px-5 text-white rounded-md w-full mt-4 cursor-pointer">
                 Sign Up
             </button>
 

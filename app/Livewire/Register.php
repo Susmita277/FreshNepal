@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -40,7 +41,7 @@ class Register extends Component
     {
         $validated = $this->validate();
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'phone' => $validated['phone'],
             'email' => $validated['email'],
@@ -48,8 +49,10 @@ class Register extends Component
             'role' => 'customer',
         ]);
 
+        // Auto login after registration
+        Auth::login($user);
+
         return redirect()->route('home');
-        
     }
 
     public function render()

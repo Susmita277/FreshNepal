@@ -137,7 +137,7 @@
 
                           
                             <button wire:click="addToCart({{ $product->id }})" type="button"
-                                class="bg-highlight text-white p-2 rounded-full hover:bg-opacity-90 transition-colors {{ $product->stock_quantity == 0 ? 'bg-gray-400 cursor-not-allowed' : '' }}"
+                                class="bg-highlight text-white p-2 rounded-full hover:bg-opacity-90  cursor-pointer transition-colors {{ $product->stock_quantity == 0 ? 'bg-gray-400 cursor-not-allowed' : '' }}"
                                 {{ $product->stock_quantity == 0 ? 'disabled' : '' }} wire:loading.attr="disabled">
                                 <x-heroicon-o-plus-circle class="w-5 h-5" />
                             </button>

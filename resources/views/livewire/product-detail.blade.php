@@ -169,7 +169,7 @@
                             Buy Now
                         </button>
                         <button wire:click="addToCart" type="button"
-                            class="outline-none bg-highlight w-[160px] py-3 flex gap-3 rounded-full items-center justify-center text-white px-5 hover:bg-opacity-90 transition-colors {{ $product->stock_quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
+                            class="outline-none bg-highlight w-[160px] py-3 flex gap-3 rounded-full items-center justify-center text-white px-5  cursor-pointer hover:bg-opacity-90 transition-colors {{ $product->stock_quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                             {{ $product->stock_quantity == 0 ? 'disabled' : '' }}>
                             Add to Cart
                         </button>

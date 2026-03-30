@@ -21,26 +21,19 @@ class Product extends Component
             $query->where('status', 'available');
         })->get();
     }
-  
+
     public function addToCart($productId)
     {
         $cartService = new CartService();
-        $success = $cartService->addToCart($productId);
+        $status = $cartService->addToCart($productId);
 
-        if ($success) {
-            // Emit event to update header
+        if ($status === 'added') {
             $this->dispatch('cartUpdated');
-
-            // Show toast notification
-            $this->dispatch('toast', [
-                'type' => 'success',
-                'message' => 'Product added to cart successfully!'
-            ]);
+            $this->dispatch('toast', ['type' => 'success', 'message' => 'Product added to cart successfully!']);
+        } elseif ($status === 'exists') {
+            $this->dispatch('toast', ['type' => 'exists', 'message' => 'Already in cart!']);
         } else {
-            $this->dispatch('toast', [
-                'type' => 'error',
-                'message' => 'Failed to add product to cart.'
-            ]);
+            $this->dispatch('toast', ['type' => 'error', 'message' => 'Failed to add product to cart.']);
         }
     }
 

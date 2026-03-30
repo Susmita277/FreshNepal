@@ -4,10 +4,11 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Category;
+use App\Services\CartService;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class Home extends Component 
-{ 
+class Home extends Component
+{
 
     use WireToast;
 
@@ -29,25 +30,17 @@ class Home extends Component
     }
     public function addToCart($productId)
     {
-        return true;
-        // $cartService = new CartService();
-        // $success = $cartService->addToCart($productId);
+        $cartService = new CartService();
+        $status = $cartService->addToCart($productId);
 
-        // if ($success) {
-            // Emit event to update header
-            // $this->dispatch('cartUpdated');
-
-            // // Show toast notification
-            // $this->dispatch('toast', [
-            //     'type' => 'success',
-            //     'message' => 'Product added to cart successfully!'
-            // ]);
-        // } else {
-            // $this->dispatch('toast', [
-            //     'type' => 'error',
-            //     'message' => 'Failed to add product to cart.'
-            // ]);
-        // }
+        if ($status === 'added') {
+            $this->dispatch('cartUpdated');
+            $this->dispatch('toast', ['type' => 'success', 'message' => 'Product added to cart successfully!']);
+        } elseif ($status === 'exists') {
+            $this->dispatch('toast', ['type' => 'exists', 'message' => 'Already in cart!']);
+        } else {
+            $this->dispatch('toast', ['type' => 'error', 'message' => 'Failed to add product to cart.']);
+        }
     }
 
     public function render()

@@ -23,7 +23,7 @@
                 <h4 class="text-md tracking-relaxed font-medium font-inter text-gray-800 mb-2">Category</h4>
                 @foreach ($categories as $category)
                     <li class="flex gap-x-2 my-2 items-center">
-                        <input type="checkbox" wire:model.defer="selectedCategories" value="{{ $category->id }}"
+                        <input type="checkbox" wire:model.live="selectedCategories" value="{{ $category->id }}"
                             id="category_{{ $category->id }}"
                             class="rounded border-gray-300 text-highlight focus:ring-highlight">
                         <label for="category_{{ $category->id }}"
@@ -40,7 +40,7 @@
             <ul class="mt-6">
                 <h4 class="text-md tracking-relaxed font-medium font-inter text-gray-800 mb-2">Price</h4>
                 <li class="flex gap-x-2 my-2 items-center">
-                    <input type="radio" wire:model.defer="priceSort" value="high_to_low" id="price_high_low"
+                    <input type="radio" wire:model.live="priceSort" value="high_to_low" id="price_high_low"
                         name="priceSort" class="border-gray-300 text-highlight focus:ring-highlight">
                     <label for="price_high_low"
                         class="text-md tracking-relaxed font-medium font-inter text-gray-800 cursor-pointer">
@@ -48,7 +48,7 @@
                     </label>
                 </li>
                 <li class="flex gap-x-2 my-2 items-center">
-                    <input type="radio" wire:model.defer="priceSort" value="low_to_high" id="price_low_high"
+                    <input type="radio" wire:model.live="priceSort" value="low_to_high" id="price_low_high"
                         name="priceSort" class="border-gray-300 text-highlight focus:ring-highlight">
                     <label for="price_low_high"
                         class="text-md tracking-relaxed font-medium font-inter text-gray-800 cursor-pointer">
@@ -56,7 +56,7 @@
                     </label>
                 </li>
                 <li class="flex gap-x-2 my-2 items-center">
-                    <input type="radio" wire:model.defer="priceSort" value="" id="price_none" name="priceSort"
+                    <input type="radio" wire:model.live="priceSort" value="" id="price_none" name="priceSort"
                         class="border-gray-300 text-highlight focus:ring-highlight">
                     <label for="price_none"
                         class="text-md tracking-relaxed font-medium font-inter text-gray-800 cursor-pointer">

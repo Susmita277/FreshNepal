@@ -24,11 +24,11 @@ class Login extends Component
 
             // Redirect based on role
             if ($user->role === 'admin') {
-                return route('admin.dashboard'); 
+                return route('admin.dashboard');
             } elseif ($user->role === 'vendor') {
-                return route('vendor.dashboard'); 
+                return route('vendor.dashboard');
             } else {
-                return route('home'); // 
+                return redirect()->route('home');
             }
         }
 
@@ -36,13 +36,12 @@ class Login extends Component
         session()->flash('error', 'Invalid credentials');
     }
 
-    // Toggle password visibility
     public function togglePassword()
     {
         $this->showPassword = !$this->showPassword;
     }
 
-  
+
 
     public function render()
     {

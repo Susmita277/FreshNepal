@@ -27,13 +27,13 @@ class Header extends Component
         $this->cartCount = $cartService->getCartCount();
     }
 
-    // public function logout()
-    // {
-    //     auth()->logout();
-    //     session()->invalidate();
-    //     session()->regenerateToken();
-    //     return redirect('/');
-    // }
+    public function logout()
+    {
+        auth()->logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect('/');
+    }
 
     public function updatedSearchQuery()
     {
@@ -50,25 +50,26 @@ class Header extends Component
     {
         try {
             $results = Product::where('name', 'like', '%' . $this->searchQuery . '%')
-                ->where('status', 'active')
-                ->select('id', 'name', 'price', 'first_image_url', 'unit_type')
+                ->where('status', 'available')      
+                ->select('id', 'name', 'price', 'slug', 'unit_type','image') 
                 ->limit(8)
                 ->get();
 
-            $this->searchResults = $results->map(function($product) {
+            $this->searchResults = $results->map(function ($product) {
                 return [
                     'id' => $product->id,
                     'name' => $product->name,
                     'price' => $product->price,
-                    'image' => $product->first_image_url ?? 'https://via.placeholder.com/80',
+                    'image' => $product->first_image_url, 
                     'unit_type' => $product->unit_type,
+                    'slug' => $product->slug,
                 ];
             })->toArray();
-
         } catch (\Exception $e) {
             $this->searchResults = [];
         }
     }
+
 
     public function viewProduct($productId)
     {

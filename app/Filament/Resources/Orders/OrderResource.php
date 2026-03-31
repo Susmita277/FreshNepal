@@ -49,50 +49,36 @@ class OrderResource extends Resource
             'edit' => EditOrder::route('/{record}/edit'),
         ];
     }
-
     public static function getEloquentQuery(): Builder
     {
         $user = auth()->user();
-        
-        // DEBUG: Check user role fields
-        // \Log::info('User role check:', [
-        //     'user_id' => $user->id,
-        //     'is_admin' => $user->is_admin ?? 'not set',
-        //     'role' => $user->role ?? 'not set',
-        //     'user_type' => $user->user_type ?? 'not set'
-        // ]);
 
-        // Check for ADMIN first (highest priority)
-        if (($user->is_admin ?? false) === 1 || ($user->is_admin ?? false) === true) {
-            return parent::getEloquentQuery(); // Admin sees ALL orders
-        }
-        
-        if (($user->role ?? null) === 'admin') {
-            return parent::getEloquentQuery(); // Admin sees ALL orders
+        $query = parent::getEloquentQuery()->with(['items.vendor', 'user']);
+
+        if ($user->role === 'admin') {
+            return $query;
         }
 
-        // Check for VENDOR second
-        if (($user->user_type ?? null) === 'vendor' || ($user->role ?? null) === 'vendor') {
-            // Vendor sees ONLY orders with their products
-            return parent::getEloquentQuery()
-                ->whereHas('items', function ($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                });
+        if ($user->role === 'vendor') {
+            return $query->whereHas('items', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
         }
 
-        // Default - regular CUSTOMER sees only their own orders
-        return parent::getEloquentQuery()->where('user_id', $user->id);
+        return $query->where('user_id', $user->id);
     }
+
+    
 
     public static function getNavigationLabel(): string
     {
         $user = auth()->user();
-        
+
         // Vendor sees "My Orders"
         if (($user->user_type ?? null) === 'vendor' || ($user->role ?? null) === 'vendor') {
             return 'My Orders';
         }
-        
+
         // Admin sees "Orders"
         return 'Orders';
     }
@@ -100,12 +86,12 @@ class OrderResource extends Resource
     public static function getPluralModelLabel(): string
     {
         $user = auth()->user();
-        
+
         // Vendor sees "My Orders"
         if (($user->user_type ?? null) === 'vendor' || ($user->role ?? null) === 'vendor') {
             return 'My Orders';
         }
-        
+
         // Admin sees "Orders"
         return 'Orders';
     }
@@ -113,22 +99,22 @@ class OrderResource extends Resource
     public static function canCreate(): bool
     {
         $user = auth()->user();
-        
+
         // Only admin can create orders manually
-        return ($user->is_admin ?? false) === 1 || 
-               ($user->is_admin ?? false) === true || 
-               ($user->role ?? null) === 'admin';
+        return ($user->is_admin ?? false) === 1 ||
+            ($user->is_admin ?? false) === true ||
+            ($user->role ?? null) === 'admin';
     }
 
     public static function shouldRegisterNavigation(): bool
     {
         $user = auth()->user();
-        
+
         // Show to admin and vendor, hide from regular customers
-        return ($user->is_admin ?? false) === 1 || 
-               ($user->is_admin ?? false) === true || 
-               ($user->role ?? null) === 'admin' ||
-               ($user->user_type ?? null) === 'vendor' ||
-               ($user->role ?? null) === 'vendor';
+        return ($user->is_admin ?? false) === 1 ||
+            ($user->is_admin ?? false) === true ||
+            ($user->role ?? null) === 'admin' ||
+            ($user->user_type ?? null) === 'vendor' ||
+            ($user->role ?? null) === 'vendor';
     }
 }

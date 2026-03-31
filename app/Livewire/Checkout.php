@@ -47,45 +47,58 @@ class Checkout extends Component
         $this->calculateTotals();
     }
 
+
     public function placeOrder()
     {
         $this->validate();
 
         try {
-            logger('Starting order placement for user: ' . Auth::id());
+            // Create the order in DB
+            $order = \App\Models\Order::create([
+                'user_id'          => Auth::id(),
+                'subtotal'         => $this->subtotal,
+                'total_amount'     => $this->total,
+                'delivery_charge'  => $this->deliveryCharge,
+                'status'           => 'pending',
+                'delivery_address' => $this->area,
+                'city'             => $this->city,
+                'area'             => $this->area,
+                'payment_method'   => 'Cash on Delivery',
+                'order_date'       => now(),
+            ]);
 
-            // Save order data to session
-            $orderData = [
-                'user_id' => Auth::id(),
-                'user_name' => Auth::user()->name,
-                'city' => $this->city,
-                'area' => $this->area,
-                'subtotal' => $this->subtotal,
-                'total' => $this->total,
+            // Save order items
+            foreach ($this->cartItems as $item) {
+                \App\Models\OrderItem::create([
+                    'order_id'   => $order->id,
+                    'product_id' => $item['product_id'],
+                    'user_id'    => $item['vendor_id'], // vendor_id stored as user_id
+                    'quantity'   => $item['quantity'],
+                    'price'      => $item['price'],
+                ]);
+            }
+
+            // Save to session for order confirmation page
+            session()->put('last_order', [
+                'order_id'     => $order->id,
+                'user_name'    => Auth::user()->name,
+                'city'         => $this->city,
+                'area'         => $this->area,
+                'subtotal'     => $this->subtotal,
+                'total'        => $this->total,
                 'delivery_charge' => $this->deliveryCharge,
-                'status' => 'confirmed',
-                'order_date' => now()->format('Y-m-d H:i:s'),
-                'cart_items' => $this->cartItems,
-                'total_items' => $this->getTotalItems()
-            ];
-
-            // Save to session
-            session()->put('last_order', $orderData);
-            session()->save(); // Force save
-            
-            logger('Order data saved to session');
+                'status'       => 'pending',
+                'order_date'   => now()->format('Y-m-d H:i:s'),
+                'cart_items'   => $this->cartItems,
+            ]);
 
             // Clear cart
             $this->cartService->clearCart();
-            return redirect()->route('order-details');
-        
-            // Use Livewire redirect
-            return $this->redirectRoute('order-details',$orderData);
 
-            
+            return redirect()->route('order-details');
         } catch (\Exception $e) {
             logger('Order placement error: ' . $e->getMessage());
-            session()->flash('error', 'Failed to place order. Please try again: ' . $e->getMessage());
+            session()->flash('error', 'Failed to place order. Please try again.');
         }
     }
 

@@ -72,31 +72,26 @@
                             </div>
                         </div>
 
-                        <!-- Payment Method -->
-                        <div class="py-6">
-                            <h3 class="text-xl font-medium font-poppins text-gray-700 mb-4">Payment Method</h3>
-                            <div class="flex gap-3">
-                                <div class="relative">
-                                    <div
-                                        class="rounded-xl px-8 py-4 justify-center flex flex-col items-center gap-2 border-2 border-highlight w-[200px] h-[100px] bg-highlight/5 transition-all smooth">
-                                        <div class="w-[50px] h-[50px]">
-                                            <img src="{{ asset('money.png') }}" class="w-full h-full object-contain">
-                                        </div>
-                                        <h4 class="text-md tracking-relaxed font-medium font-inter text-gray-700">
-                                            Cash on Delivery
-                                        </h4>
-                                    </div>
-                                    <div
-                                        class="absolute -top-2 -right-2 bg-highlight text-white rounded-full w-6 h-6 flex items-center justify-center">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </div>
+
+
+
+                        <div class="mt-4">
+                            <label class="font-medium">Payment Method</label>
+                            <div class="flex gap-4 mt-2">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" wire:model.live="paymentMethod" value="cash_on_delivery">
+                                    Cash on Delivery
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" wire:model.live="paymentMethod" value="esewa">
+                                    <img src="https://esewa.com.np/common/images/esewa_logo.png" class="h-6"> eSewa
+                                </label>
+                                <p>Selected: {{ $paymentMethod }}</p>
                             </div>
                         </div>
+
+
+
                     </div>
 
                     <!-- Order Items -->
@@ -161,11 +156,10 @@
                         </div>
 
                         <div class="space-y-4">
-                           <button type="submit" wire:loading.attr="disabled"
-                                class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-highlight text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed">
-                                <span class="truncate">Place Order</span>
-                               
-                        </button>
+                            <button type="button" wire:click="placeOrder"
+                                class="bg-highlight text-white py-2 px-6 rounded-md w-full mt-4">
+                                {{ $paymentMethod === 'Esewa' ? 'Pay with eSewa' : 'Place Order' }}
+                            </button>
 
                             <a href="{{ route('products') }}"
                                 class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 border border-gray-300 text-gray-700 text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 transition-colors">

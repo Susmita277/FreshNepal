@@ -14,6 +14,7 @@ class Checkout extends Component
     public $subtotal = 0;
     public $total = 0;
     public $cartItems = [];
+    public $paymentMethod = 'cash';
 
     protected $cartService;
 
@@ -53,7 +54,6 @@ class Checkout extends Component
         $this->validate();
 
         try {
-            // Create the order in DB
             $order = \App\Models\Order::create([
                 'user_id'          => Auth::id(),
                 'subtotal'         => $this->subtotal,
@@ -63,37 +63,40 @@ class Checkout extends Component
                 'delivery_address' => $this->area,
                 'city'             => $this->city,
                 'area'             => $this->area,
-                'payment_method'   => 'Cash on Delivery',
+                'payment_method'   => $this->paymentMethod === 'esewa' ? 'Esewa' : 'Cash on Delivery',
                 'order_date'       => now(),
             ]);
 
-            // Save order items
             foreach ($this->cartItems as $item) {
                 \App\Models\OrderItem::create([
                     'order_id'   => $order->id,
                     'product_id' => $item['product_id'],
-                    'user_id'    => $item['vendor_id'], // vendor_id stored as user_id
+                    'user_id'    => $item['vendor_id'],
                     'quantity'   => $item['quantity'],
                     'price'      => $item['price'],
                 ]);
             }
 
-            // Save to session for order confirmation page
-            session()->put('last_order', [
-                'order_id'     => $order->id,
-                'user_name'    => Auth::user()->name,
-                'city'         => $this->city,
-                'area'         => $this->area,
-                'subtotal'     => $this->subtotal,
-                'total'        => $this->total,
-                'delivery_charge' => $this->deliveryCharge,
-                'status'       => 'pending',
-                'order_date'   => now()->format('Y-m-d H:i:s'),
-                'cart_items'   => $this->cartItems,
-            ]);
-
-            // Clear cart
             $this->cartService->clearCart();
+
+            // eSewa — redirect to payment page
+            if ($this->paymentMethod === 'esewa') {
+                return redirect()->route('esewa.pay', ['order_id' => $order->id]);
+            }
+
+            // Cash on delivery — save session and go to order details
+            session()->put('last_order', [
+                'order_id'        => $order->id,
+                'user_name'       => Auth::user()->name,
+                'city'            => $this->city,
+                'area'            => $this->area,
+                'subtotal'        => $this->subtotal,
+                'total'           => $this->total,
+                'delivery_charge' => $this->deliveryCharge,
+                'status'          => 'pending',
+                'order_date'      => now()->format('Y-m-d H:i:s'),
+                'cart_items'      => $this->cartItems,
+            ]);
 
             return redirect()->route('order-details');
         } catch (\Exception $e) {

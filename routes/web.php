@@ -4,6 +4,7 @@ use App\Livewire\Checkout;
 use App\Livewire\Home;
 use App\Livewire\Cart;
 use App\Livewire\OrderDetails;
+use App\Http\Controllers\EsewaController;
 use App\Livewire\Product;
 use App\Livewire\ProductDetail;
 use App\Livewire\Register;
@@ -26,6 +27,9 @@ Route::get('/user-login', Login::class)->name('user-login');
 Route::get('/vendor/verify', VerifyVendor::class)->name('seller-verify');
 Route::get('/test-wire',TestWire::class)->name('test');
 Route::get('/vendor/register', VendorRegister::class)->name('seller-register');
+Route::get('/esewa/pay', [EsewaController::class, 'pay'])->name('esewa.pay');
+Route::get('/esewa/success', [EsewaController::class, 'success'])->name('esewa.success');
+Route::get('/esewa/failure', [EsewaController::class, 'failure'])->name('esewa.failure');
 
 
 

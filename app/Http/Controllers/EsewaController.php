@@ -11,12 +11,12 @@ class EsewaController extends Controller
     public function __construct(private EsewaService $esewa) {}
 
     // Redirect to eSewa payment page
+ 
     public function pay(Request $request)
     {
-        $orderId = $request->order_id;
-        $order   = Order::findOrFail($orderId);
+        $order = Order::findOrFail($request->order_id); // this returns Order model ✓
 
-        $paymentData = $this->esewa->getPaymentData($order->toArray());
+        $paymentData = $this->esewa->getPaymentData($order); // pass model not array
         $paymentUrl  = $this->esewa->getPaymentUrl();
 
         return view('esewa.pay', compact('paymentData', 'paymentUrl'));

@@ -13,6 +13,8 @@ use App\Livewire\TestWire;
 use App\Livewire\VerifyVendor;
 use App\Livewire\VendorRegister;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\OrderHistory;
+use App\Livewire\OrderView;
 
 
 
@@ -21,7 +23,6 @@ Route::get('/products', Product::class)->name('products');
 Route::get('/products/{slug}', ProductDetail::class)->name('product-details');
 Route::get('/cart', Cart::class)->name('cart');
 Route::get('/checkout', Checkout::class)->name('checkout');
-Route::get('/order-details', OrderDetails::class)->name('order-details');
 Route::get('/user-register', Register::class)->name('user-register');
 Route::get('/user-login', Login::class)->name('user-login');
 Route::get('/vendor/verify', VerifyVendor::class)->name('seller-verify');
@@ -30,6 +31,13 @@ Route::get('/vendor/register', VendorRegister::class)->name('seller-register');
 Route::get('/esewa/pay', [EsewaController::class, 'pay'])->name('esewa.pay');
 Route::get('/esewa/success', [EsewaController::class, 'success'])->name('esewa.success');
 Route::get('/esewa/failure', [EsewaController::class, 'failure'])->name('esewa.failure');
+
+
+
+Route::get('/my-orders', OrderHistory::class)->name('order-history')->middleware('auth');
+Route::get('/my-orders/{orderId}', OrderView::class)->name('order-view')->middleware('auth');
+Route::get('/order-details', OrderDetails::class)->name('order-details');
+
 
 
 

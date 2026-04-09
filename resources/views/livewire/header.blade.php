@@ -122,8 +122,9 @@
 
                 <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                     @auth
-                        <li>
+                        <li><a href="{{ route('order-history') }}">Order History</a></li>
 
+                        <li>
                             <button type="button" wire:click="logout">Logout</button>
 
                         </li>

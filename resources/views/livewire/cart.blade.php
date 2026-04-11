@@ -95,13 +95,12 @@
                     <div class="space-y-3 text-sm text-gray-600">
                         <div class="flex justify-between">
                             <span>Subtotal</span>
-                            <span>NPR. {{ number_format($total, 2) }}</span>
+                        <span>NPR. {{ number_format($subtotal, 2) }}</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span>Shipping</span>
                             <div class="flex items-center gap-1">
-                                <span>NPR. 0.00</span>
-                                <span class="material-symbols-outlined text-xs cursor-pointer" title="Free shipping">info</span>
+                                <span>NPR.50</span>
                             </div>
                         </div>
                         <div class="flex justify-between">

@@ -9,10 +9,33 @@ class Cart extends Component
 {
     public $cartItems = [];
     public $groupedCart = [];
+    public $subtotal = 0;
     public $total = 0;
     public $itemCount = 0;
+    public $shippingCost = 50;
 
     protected $listeners = ['cart-updated' => 'updateCart'];
+    public function increaseQuantity($productId)
+    {
+        $cart = session()->get('cart', []);
+        if (isset($cart[$productId])) {
+            $current = $cart[$productId]['quantity'];
+            $this->updateQuantity($productId, round(($current + 0.5) * 10) / 10);
+        }
+    }
+
+    public function decreaseQuantity($productId)
+    {
+        $cart = session()->get('cart', []);
+        if (isset($cart[$productId])) {
+            $current = $cart[$productId]['quantity'];
+            $new = round(($current - 0.5) * 10) / 10;
+
+            if ($new < 1) return; // minimum is 1, do nothing
+
+            $this->updateQuantity($productId, $new);
+        }
+    }
 
     public function mount()
     {
@@ -24,7 +47,8 @@ class Cart extends Component
         $cartService = new CartService();
         $this->cartItems = $cartService->getCart();
         $this->groupedCart = $cartService->getGroupedCart();
-        $this->total = $cartService->getTotal();
+        $this->subtotal = $cartService->getTotal();
+        $this->total = $this->subtotal + $this->shippingCost;
         $this->itemCount = $cartService->getItemCount();
     }
 
@@ -45,7 +69,7 @@ class Cart extends Component
         $cartService = new CartService();
         $cartService->removeFromCart($productId);
         $this->updateCart();
-        
+
         session()->flash('success', 'Product removed from cart.');
     }
 
@@ -54,7 +78,7 @@ class Cart extends Component
         $cartService = new CartService();
         $cartService->clearCart();
         $this->updateCart();
-        
+
         session()->flash('success', 'Cart cleared.');
     }
 

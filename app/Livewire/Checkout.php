@@ -10,7 +10,7 @@ class Checkout extends Component
 {
     public $city = '';
     public $area = '';
-    public $deliveryCharge = 0;
+    public $deliveryCharge = 50;
     public $subtotal = 0;
     public $total = 0;
     public $cartItems = [];
@@ -78,13 +78,7 @@ class Checkout extends Component
             }
 
             $this->cartService->clearCart();
-
-            // eSewa — redirect to payment page
-            if ($this->paymentMethod === 'esewa') {
-                return redirect()->route('esewa.pay', ['order_id' => $order->id]);
-            }
-
-            // Cash on delivery — save session and go to order details
+            // Save session for BOTH payment methods
             session()->put('last_order', [
                 'order_id'        => $order->id,
                 'user_name'       => Auth::user()->name,
@@ -98,8 +92,14 @@ class Checkout extends Component
                 'cart_items'      => $this->cartItems,
             ]);
 
+            // Then decide where to redirect
+            if ($this->paymentMethod === 'esewa') {
+                return redirect()->route('esewa.pay', ['order_id' => $order->id]);
+            }
+
             return redirect()->route('order-details');
-        } catch (\Exception $e) {
+
+                  } catch (\Exception $e) {
             logger('Order placement error: ' . $e->getMessage());
             session()->flash('error', 'Failed to place order. Please try again.');
         }
@@ -113,8 +113,8 @@ class Checkout extends Component
             $this->subtotal += $item['price'] * $item['quantity'];
         }
 
-        $this->deliveryCharge = 0;
-        $this->total = $this->subtotal;
+        $this->deliveryCharge = 50;
+        $this->total = $this->subtotal + $this->deliveryCharge;
     }
 
     public function getTotalItems()

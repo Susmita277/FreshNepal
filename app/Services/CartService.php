@@ -7,7 +7,7 @@ use App\Models\User;
 
 class CartService
 {
-    public function addToCart($productId, $quantity = 0.5)
+    public function addToCart($productId, $quantity = 1)
     {
         $cart = session()->get('cart', []);
 
@@ -106,7 +106,7 @@ class CartService
         $total = 0;
 
         foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
+            $total += $item['price'] * $item['quantity'] ;
         }
 
         return $total;

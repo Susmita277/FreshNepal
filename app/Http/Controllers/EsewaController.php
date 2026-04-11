@@ -10,23 +10,20 @@ class EsewaController extends Controller
 {
     public function __construct(private EsewaService $esewa) {}
 
-    // Redirect to eSewa payment page
- 
+
     public function pay(Request $request)
     {
-        $order = Order::findOrFail($request->order_id); // this returns Order model ✓
+        $order = Order::findOrFail($request->order_id);
 
-        $paymentData = $this->esewa->getPaymentData($order); // pass model not array
+        $paymentData = $this->esewa->getPaymentData($order);
         $paymentUrl  = $this->esewa->getPaymentUrl();
 
         return view('esewa.pay', compact('paymentData', 'paymentUrl'));
     }
 
-    // eSewa calls this on success
     public function success(Request $request)
     {
         $encodedData = $request->data;
-
         $result = $this->esewa->verifyPayment($encodedData);
 
         if ($result['success']) {
@@ -36,11 +33,10 @@ class EsewaController extends Controller
                 'payment_method' => 'Esewa',
             ]);
 
-            session()->put('last_order', [
-                'order_id' => $order->id,
-                'total'    => $order->total_amount,
-                'status'   => 'confirmed',
-            ]);
+            $lastOrder = session()->get('last_order', []);
+            $lastOrder['status'] = 'confirmed';
+            $lastOrder['payment_method'] = 'Esewa';
+            session()->put('last_order', $lastOrder);
 
             return redirect()->route('order-details')
                 ->with('success', 'Payment successful!');
@@ -50,7 +46,7 @@ class EsewaController extends Controller
             ->with('error', 'Payment verification failed.');
     }
 
-    // eSewa calls this on failure
+
     public function failure()
     {
         return redirect()->route('cart')

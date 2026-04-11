@@ -66,6 +66,13 @@ class OrdersTable
                     ->searchable()
                     ->toggleable(),
 
+                         TextColumn::make('items.product.name')
+                    ->label('Product Name')
+                    ->listWithLineBreaks(), 
+
+                TextColumn::make('delivery_address')
+                ->label('Address'),
+
                 TextColumn::make('order_date')
                     ->label('Order Date')
                     ->dateTime()

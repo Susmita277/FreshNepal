@@ -15,21 +15,17 @@ class Product extends Model
             return null;
         }
 
-        // If value is JSON string, decode it
         if (is_string($value) && json_decode($value) !== null) {
             return json_decode($value, true);
         }
 
-        // If value is already array, return it
         if (is_array($value)) {
             return $value;
         }
 
-        // If it's a simple string, wrap it in array for consistency
         return [$value];
     }
 
-    // Add this method to get first image URL
     public function getFirstImageUrlAttribute()
     {
         $images = $this->image;

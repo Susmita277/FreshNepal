@@ -24,7 +24,7 @@ class ProductDetail extends Component
         }
 
         $this->unitType = $this->product->unit_type;
-        $this->quantity = $this->unitType === 'kg' ? 0.5 : 1;
+        $this->quantity = 1; 
         $this->selectedImage = $this->product->first_image_url;
     }
 
@@ -36,7 +36,7 @@ class ProductDetail extends Component
     public function increaseQuantity()
     {
         if ($this->unitType === 'kg') {
-            $this->quantity = round($this->quantity + 0.5, 1);
+            $this->quantity = round($this->quantity + 1);
         } else {
             $this->quantity = (int)$this->quantity + 1;
         }
@@ -45,13 +45,13 @@ class ProductDetail extends Component
     public function decreaseQuantity()
     {
         if ($this->unitType === 'kg') {
-            $newQuantity = round($this->quantity - 0.5, 1);
-            if ($newQuantity >= 0.5) {
+            $newQuantity = round($this->quantity -  1);
+            if ($newQuantity >= 1) { // ✅ Minimum 1
                 $this->quantity = $newQuantity;
             }
         } else {
             $newQuantity = (int)$this->quantity - 1;
-            if ($newQuantity >= 1) {
+            if ($newQuantity >= 1) { 
                 $this->quantity = $newQuantity;
             }
         }
@@ -60,13 +60,12 @@ class ProductDetail extends Component
     public function updatedQuantity()
     {
         if ($this->unitType === 'kg') {
-            $this->quantity = max(0.5, round($this->quantity * 2) / 2);
+            $this->quantity = max(1, round($this->quantity * 2) / 2); 
         } else {
-            $this->quantity = max(1, (int)$this->quantity);
+            $this->quantity = max(1, (int)$this->quantity); 
         }
     }
 
-    // FIX: Remove the parameter and use $this->product->id
     public function addToCart()
     {
         $cartService = new CartService();
@@ -97,7 +96,7 @@ class ProductDetail extends Component
         }
 
         $this->updatedQuantity();
-        $this->addToCart(); // Now this will work without parameters
+        $this->addToCart();
         return redirect()->route('checkout');
     }
 

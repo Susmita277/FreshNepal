@@ -31,13 +31,7 @@ class OrdersTable
                     ->searchable()
                     ->sortable(),
 
-                // Vendor name — only visible to admin
-                TextColumn::make('items.vendor.name')
-                    ->label('Vendor')
-                    ->visible($isAdmin)
-                    ->searchable()
-                    ->badge()
-                    ->separator(','),
+              
 
                 TextColumn::make('status')
                     ->label('Status')

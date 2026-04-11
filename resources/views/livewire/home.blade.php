@@ -11,7 +11,7 @@
             <a href="{{ route('products') }}">
                 <div
                     class="bg-highlight  pl-8 pr-1  w-[160px] py-2 flex gap-3 rounded-full mt-8 items-center justify-center cursor-pointer">
-                    <p class="text-sm font-poppins font-medium text-white">Shop Now</p>
+                    <p class="text-sm font-poppins font-medium text-white">Buy Now</p>
                     <div class="w-8 h-8 rounded-full bg-white flex justify-center items-center p-1">
                         <div class="h-3 w-3"> <img src="vegetables.png" class="object-cover w-full h-full"></div>
                     </div>

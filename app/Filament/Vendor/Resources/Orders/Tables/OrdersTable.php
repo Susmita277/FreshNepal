@@ -24,7 +24,7 @@ class OrdersTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending'    => 'warning',
                         'confirmed'  => 'info',
                         'processing' => 'info',
@@ -44,6 +44,14 @@ class OrdersTable
 
                 TextColumn::make('city')
                     ->label('City'),
+
+        
+                TextColumn::make('items.product.name')
+                    ->label('Product Name')
+                    ->listWithLineBreaks(), 
+
+                TextColumn::make('delivery_address')
+                    ->label('Address'),
 
                 TextColumn::make('order_date')
                     ->label('Order Date')

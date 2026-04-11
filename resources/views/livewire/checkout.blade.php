@@ -42,7 +42,9 @@
         <form wire:submit.prevent="placeOrder">
             <div class="grid grid-cols-3 justify-center gap-10">
                 <div class="col-span-2">
-                    <div class="mb-8 bg-white px-8 py-5 rounded-md shadow-sm">
+                    <!-- Add x-data wrapper here -->
+                    <div class="mb-8 bg-white px-8 py-5 rounded-md shadow-sm" x-data="{ city: '', area: '', get addressFilled() { return this.city.trim() !== '' && this.area.trim() !== '' } }">
+
                         <h3 class="text-xl font-medium font-poppins text-gray-700 mb-6">Delivery Address</h3>
 
                         <div class="grid grid-cols-2 gap-4">
@@ -50,7 +52,7 @@
                                 <label class="w-fit text-gray-500 font-medium text-md font-[var(--font-poppins)] py-2">
                                     City/District *
                                 </label>
-                                <input type="text" wire:model.defer="city"
+                                <input type="text" wire:model.live="city" x-model="city" {{-- ADD THIS --}}
                                     class="w-full text-gray-700 appearance-none rounded-radius border border-gray-200 rounded-md bg-surface-alt px-4 py-3 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight @error('city') border-red-500 @enderror"
                                     placeholder="Enter your city">
                                 @error('city')
@@ -58,12 +60,11 @@
                                 @enderror
                             </div>
 
-                            <!-- Area Input -->
                             <div class="relative flex w-full flex-col justify-center gap-1">
                                 <label class="w-fit text-gray-500 font-medium text-md font-[var(--font-poppins)] py-2">
                                     Area *
                                 </label>
-                                <input type="text" wire:model.defer="area"
+                                <input type="text" wire:model.live="area" x-model="area" {{-- ADD THIS --}}
                                     class="w-full text-gray-700 appearance-none rounded-radius border border-gray-200 rounded-md bg-surface-alt px-4 py-3 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight @error('area') border-red-500 @enderror"
                                     placeholder="Enter your area">
                                 @error('area')
@@ -72,27 +73,34 @@
                             </div>
                         </div>
 
-
-
-
                         <div class="mt-4">
                             <label class="font-medium">Payment Method</label>
+
+                            <!-- Helper text when address is empty -->
+                            <p x-show="!addressFilled" class="text-xs text-gray-400 mt-1">
+                                Please enter your city and area to select a payment method.
+                            </p>
+
                             <div class="flex gap-4 mt-2">
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" wire:model.live="paymentMethod" value="cash_on_delivery">
+                                <label class="flex items-center gap-2"
+                                    :class="addressFilled ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed'">
+                                    <input type="radio" wire:model.live="paymentMethod" value="cash_on_delivery"
+                                        class="w-4 h-4" :disabled="!addressFilled">
                                     Cash on Delivery
                                 </label>
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" wire:model.live="paymentMethod" value="esewa">
-                                    <img src="https://esewa.com.np/common/images/esewa_logo.png" class="h-6"> eSewa
+
+                                <label class="flex gap-2 items-center"
+                                    :class="addressFilled ? 'cursor-pointer' : 'opacity-40 cursor-not-allowed'">
+                                    <input type="radio" wire:model.live="paymentMethod" value="esewa" class="w-4 h-4"
+                                        :disabled="!addressFilled">
+                                    <span>eSewa</span>
+                                    <img src="https://esewa.com.np/common/images/esewa_logo.png" class="h-6">
                                 </label>
-                                <p>Selected: {{ $paymentMethod }}</p>
                             </div>
                         </div>
 
-
-
                     </div>
+
 
                     <!-- Order Items -->
                     <div class="mb-8 bg-white p-6 rounded-lg shadow-sm">
